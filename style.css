@@ -1,0 +1,898 @@
+/* Global Styles */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --text-color: #2c3e50;
+    --light-bg: #f8f9fa;
+    --border-color: #e9ecef;
+}
+
+/* Typography Scale */
+:root {
+    --h1-size: 2.5rem;    /* Main name */
+    --h2-size: 1.8rem;    /* Role/Position */
+    --h3-size: 1.5rem;    /* Major section headings */
+    --h4-size: 1.25rem;   /* Subsection headings */
+    --h5-size: 1.1rem;    /* Category headings */
+    --body-size: 0.95rem; /* Regular text */
+    --small-size: 0.85rem; /* Supporting text */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Navigation */
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem 0;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Section Styles - Common */
+.section {
+    padding: 2rem 0;
+}
+
+/* Major Section Headers (h3) */
+.students-section h3,
+.teaching-section h3,
+.publications-section h3,
+.talks-section h3,
+.awards-section h3 {
+    color: var(--primary-color);
+    font-size: var(--h3-size);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Subsection Headers (h4) */
+.students-section h4,
+.teaching-section h4,
+.publications-section h4,
+.talks-section h4,
+.awards-section h4,
+.awards-category h4 {
+    color: var(--secondary-color);
+    font-size: var(--h4-size);
+    margin: 1.25rem 0 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.25rem;
+}
+
+/* Category Headers (h5) */
+.student-category h5,
+.publication-category h5 {
+    color: var(--secondary-color);
+    font-size: var(--h5-size);
+    margin: 1rem 0 0.5rem;
+    font-weight: 500;
+}
+
+/* Profile Section */
+.profile-container {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-top: 1.5rem;
+}
+
+.profile-image-container {
+    flex: 0 0 350px;
+    margin-right: 2.5rem;
+}
+
+.profile-image-container img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+.profile-image-container img:hover {
+    transform: scale(1.02);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h1 {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.profile-info h2 {
+    margin: 0.5rem 0;
+    line-height: 1.2;
+}
+
+.profile-info .affiliation,
+.profile-info .institution {
+    font-size: var(--small-size);
+    color: var(--secondary-color);
+    margin-bottom: 0.3rem;
+}
+
+.profile-bio {
+    margin: 2rem 0;
+    line-height: 1.8;
+    font-size: var(--body-size);
+    color: var(--text-color);
+}
+
+/* Profile Links */
+.profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    justify-content: flex-start;
+}
+
+.profile-links .link-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background-color: var(--light-bg);
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+.profile-links .link-item:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.profile-links .link-item img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+}
+
+/* List Item Common Styles */
+.student-item,
+.publication-item,
+.talk-item,
+.award-item,
+.teaching-item {
+    display: flex;
+    margin-bottom: 0.75rem;
+    text-align: justify;
+}
+
+.bullet {
+    flex-shrink: 0;
+    padding-right: 0.5rem;
+    color: var(--accent-color);
+}
+
+.item-content {
+    flex: 1;
+}
+
+/* Student Section Specific */
+.student-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.student-name {
+    font-weight: 500;
+}
+
+.student-year {
+    color: var(--accent-color);
+}
+
+.thesis-title {
+    display: block;
+    margin-top: 0.25rem;
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+/* Talk and Award Sections */
+.talk-content,
+.award-content {
+    text-align: justify;
+}
+
+/* Research Areas */
+.research-areas {
+    margin: 1.25rem 0;
+    padding: 1rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+}
+
+.research-areas h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+.research-areas ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.research-areas li {
+    padding: 0.5rem 0.75rem;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-size: var(--body-size);
+    line-height: 1.3;
+}
+
+/* Education Section */
+.education-section {
+    margin: 1.25rem 0;
+}
+
+.education-section h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+.education-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.education-item {
+    background-color: var(--light-bg);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.education-item h4 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.education-item .institution {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.education-item .duration {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Teaching Section */
+.teaching-section {
+    margin: 1.25rem 0;
+}
+
+.teaching-section h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+.current-teaching,
+.past-teaching {
+    margin-bottom: 1.5rem;
+}
+
+.teaching-section h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin: 1rem 0 0.75rem;
+    font-weight: 600;
+}
+
+.teaching-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.teaching-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    line-height: 1.4;
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--light-bg);
+    border-radius: 4px;
+}
+
+.teaching-item .bullet {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.teaching-item .course-name {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+/* Students Section */
+.students-section {
+    margin: 1.25rem 0;
+}
+
+.students-section h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+.present-students,
+.past-students {
+    margin-bottom: 2rem;
+}
+
+.present-students:empty,
+.past-students:empty,
+.student-category:empty {
+    display: none;
+}
+
+.students-section h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.student-category {
+    margin-bottom: 1.5rem;
+}
+
+.student-category:last-child {
+    margin-bottom: 0;
+}
+
+.student-category h5 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.student-item {
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+}
+
+.student-name {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.student-name .bullet {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.student-name .joint-supervisor {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.student-name .joint-supervisor a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.student-name .joint-supervisor a:hover {
+    text-decoration: underline;
+}
+
+.student-thesis {
+    margin-top: 0.25rem;
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.student-year {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Talks Section */
+.talks-section {
+    margin: 1.25rem 0;
+}
+
+.talks-section h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+.talk-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+}
+
+.talk-item .bullet {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.talk-content {
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.talk-year {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* Awards Section */
+.awards-section {
+    margin: 1.25rem 0;
+}
+
+.awards-section h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.awards-category {
+    margin-bottom: 1.5rem;
+}
+
+.awards-category:last-child {
+    margin-bottom: 0;
+}
+
+.awards-category h4 {
+    color: var(--secondary-color);
+    font-size: 1.25rem;
+    margin: 1.25rem 0 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.25rem;
+}
+
+.award-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    margin-bottom: 0.4rem;
+    padding-left: 1rem;
+}
+
+.award-item .bullet {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.award-content {
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.4;
+}
+
+.award-year {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.awards-category:empty {
+    display: none;
+}
+
+/* Make first category's h4 have less top margin since it follows h3 */
+.awards-category:first-of-type h4 {
+    margin-top: 0;
+}
+
+/* Publications Section */
+.publications-section {
+    margin: 1.25rem 0;
+}
+
+.publications-section h3 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.publications-section h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.publications-note {
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+}
+
+.publications-note a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.publications-note a:hover {
+    text-decoration: underline;
+}
+
+.year-section {
+    margin-bottom: 1.5rem;
+}
+
+.year-heading {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.publications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.publication-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    line-height: 1.4;
+    margin-left: 0.5rem;
+}
+
+.publication-item .bullet {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.publication-item .pub-title {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.journal-articles,
+.conference-articles,
+.book-chapters,
+.patents {
+    margin-bottom: 2rem;
+}
+
+/* Experience Section */
+.experience-section {
+    margin: 1.25rem 0;
+}
+
+.professional-experience,
+.administrative-experience {
+    margin-bottom: 1.5rem;
+}
+
+.experience-section h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+.experience-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.experience-item {
+    background-color: var(--light-bg);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.experience-item h4 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.experience-item .duration {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.experience-item .institution {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .profile-container {
+        gap: 2rem;
+        padding: 1.5rem;
+    }
+
+    .profile-image-container {
+        flex: 0 0 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    .experience-items {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .profile-container {
+        flex-direction: column;
+        padding: 1rem;
+        align-items: center;
+        gap: 0;
+    }
+
+    .profile-image-container {
+        width: 180px;
+        margin: 0;
+        padding: 0;
+        line-height: 0;
+    }
+
+    .profile-image-container img {
+        margin: 0;
+        padding: 0;
+        display: block;
+    }
+
+    .profile-info {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-info h1 {
+        margin: 0;
+        padding: 0;
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+
+    .profile-info h2 {
+        margin: 0.25rem 0 0 0;
+        padding: 0;
+        font-size: 1.25rem;
+        line-height: 1.2;
+    }
+
+    .profile-info p {
+        margin: 0.25rem 0;
+        line-height: 1.4;
+    }
+
+    .profile-links {
+        justify-content: center;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    .student-item,
+    .publication-item,
+    .talk-item,
+    .award-item,
+    .teaching-item {
+        text-align: left;
+    }
+
+    .bullet {
+        padding-top: 0.2rem;
+    }
+
+    .item-content {
+        padding-right: 0.5rem;
+    }
+
+    .research-areas ul {
+        justify-content: center;
+    }
+
+    .research-areas li {
+        width: calc(50% - 0.5rem);
+        text-align: center;
+    }
+
+    .section {
+        padding: 1rem 0;
+    }
+
+    .awards-category,
+    .student-category,
+    .publication-category {
+        margin-bottom: 1rem;
+    }
+
+    .award-content,
+    .student-content,
+    .publication-content {
+        word-break: break-word;
+    }
+}
+
+/* Larger Mobile Devices */
+@media (min-width: 480px) and (max-width: 768px) {
+    .profile-links .link-item {
+        width: auto;
+        min-width: 140px;
+    }
+
+    .research-areas li {
+        width: auto;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .profile-links .link-item {
+        break-inside: avoid;
+    }
+
+    .student-item,
+    .publication-item,
+    .talk-item,
+    .award-item,
+    .teaching-item {
+        break-inside: avoid;
+    }
+}
+
+/* Footer */
+footer {
+    background-color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 4rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Fix long text wrapping */
+.thesis-title,
+.talk-venue,
+.award-description {
+    display: block;
+    margin-top: 0.2rem;
+    margin-left: 1.5rem;
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+/* Section Headers */
+h3, h4, h5 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Publications Section */
+.publication-item {
+    margin-bottom: 1rem;
+}
+
+.publication-content {
+    text-align: justify;
+}
+
+/* Links */
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+} 
