@@ -73,13 +73,13 @@ function setupCarousel() {
         updateSlidePosition();
     });
 
-    // Auto-advance slides every 5 seconds
+    // Auto-advance slides every 3 seconds
     let autoAdvance = setInterval(() => {
         if (!document.hidden) {
             currentSlide = (currentSlide + 1) % galleryImages.length;
             updateSlidePosition();
         }
-    }, 5000);
+    }, 2000);
 
     // Pause auto-advance on hover
     container.addEventListener('mouseenter', () => clearInterval(autoAdvance));
@@ -89,7 +89,7 @@ function setupCarousel() {
                 currentSlide = (currentSlide + 1) % galleryImages.length;
                 updateSlidePosition();
             }
-        }, 5000);
+        }, 2000);
     });
 
     // Touch support
