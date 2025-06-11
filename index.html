@@ -8,8 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <!-- Load Supabase first -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script>
+        // Initialize Supabase client immediately to ensure it's available
+        const SUPABASE_URL = 'https://ktiiyeuvsvbqnrhqbwmr.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWl5ZXV2c3ZicW5yaHFid21yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1NjI1OTIsImV4cCI6MjA2NTEzODU5Mn0.yPZY4oo70R4UXl4grSLyLRfNLJzFg1EYMeoKjpZy6tA';
+        window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    </script>
     <!-- Load other scripts after Supabase is initialized -->
     <script defer src="gallery.js"></script>
     <script defer src="notice.js"></script>
@@ -60,25 +65,23 @@
                         <h2 id="title">Assistant Professor</h2>
                         <p class="affiliation" id="current-position">Department of Mechanical Engineering</p>
                         <p class="institution" id="current-affiliation">Indian Institute of Technology Patna, Bihar, India</p>
-                        <div class="profile-links">
-                            <a href="mailto:jnarayan@iitp.ac.in" class="link-item" id="email-link">
-                                <img src="https://img.icons8.com/ios-filled/50/000000/email.png" alt="Email">
-                                Email
-                            </a>
-                            <a href="#" class="link-item" id="cv-link">
-                                <img src="https://img.icons8.com/ios-filled/50/000000/resume.png" alt="CV">
-                                Curriculum Vitae
-                            </a>
-                            <a href="#" class="link-item" id="scholar-link">
-                                <img src="https://img.icons8.com/ios-filled/50/000000/google-scholar.png" alt="Google Scholar">
-                                Google Scholar
-                            </a>
-                            <a href="#" class="link-item" id="linkedin-link">
-                                <img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn">
-                                LinkedIn
-                            </a>
+                        <div class="contact-info">
+                            <p><i class="fas fa-map-marker-alt"></i> R115 Block 3 Academic Area, IIT Patna, Bihta, Bihar - 801106</p>
+                            <p><i class="fas fa-envelope"></i> IITP: jnarayan@iitp.ac.in | Personal: jnarayan.personal@gmail.com</p>
+                            <p><i class="fas fa-phone"></i> +91-611-523-XXXX</p>
                         </div>
-                        <p class="profile-bio" id="bio"></p>
+                        
+                        <div class="profile-links">
+                            <a href="#" class="profile-btn scholar-btn"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
+                            <a href="#" class="profile-btn linkedin-btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                            <a href="#" class="profile-btn iitp-btn"><i class="fas fa-university"></i> IITP Webpage</a>
+                            <a href="#" class="profile-btn orcid-btn"><i class="fab fa-orcid"></i> ORCID</a>
+                            <a href="#" class="profile-btn cv-btn"><i class="fas fa-file-alt"></i> View CV</a>
+                        </div>
+                        
+                        <div class="profile-bio">
+                            <p>Dr. Jyotindra Narayan is an Assistant Professor in the Mechanical Engineering Department at IIT Patna. He completed his Ph.D. in Rehabilitation Robotics from IIT Guwahati and holds an M.E. in CAD/CAM Engineering from Thapar Institute. His research interests include medical and rehabilitation robotics, robust and data-driven control, human–robot interaction, gait analysis, and predictive modeling for neurodegenerative diseases. Before joining IIT Patna in December 2024, he worked as a postdoctoral researcher at Imperial College London and the University of Bayreuth, and also taught briefly at Thapar Institute. At IIT Patna, he teaches courses on system dynamics, control, mechatronics, and applied machine learning.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -104,9 +107,6 @@
                                             </span>
                                         </button>
                                     </div>
-                                    <div class="carousel-indicators" id="gallery-indicators">
-                                        <!-- Indicators will be inserted here by JavaScript -->
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -125,34 +125,18 @@
                 <!-- Research Areas Section -->
                 <div id="research" class="research-areas">
                     <h3>Research Areas</h3>
-                    <ul>
-                        <li>Medical Robotics</li>
-                        <li>Robust Control</li>
-                        <li>Data-Driven Control</li>
-                        <li>Human-Robot Interaction</li>
-                        <li>Rehabilitation Robotics</li>
-                        <li>Bioengineering</li>
-                        <li>Gait Analysis</li>
-                        <li>Generative AI for Time Series Forecasting</li>
-                        <li>Predictive Modeling for Neurodegenerative diseases</li>
-                    </ul>
-                </div>
-
-                <!-- Experience Section -->
-                <div id="experience" class="experience-section">
-                    <h3>Education</h3>
-                    <div class="education-items">
-                        <div class="education-item">
-                            <h4>Ph.D. in Rehabilitation Robotics</h4>
-                            <p class="institution">Indian Institute of Technology Guwahati, India</p>
-                            <p class="duration">2017 - 2023</p>
-                        </div>
-
-                        <div class="education-item">
-                            <h4>M.E. in CAD/CAM Engineering</h4>
-                            <p class="institution">Thapar Institute of Engineering and Technology, India</p>
-                            <p class="duration">2015 - 2017</p>
-                        </div>
+                    <div class="bullet-list">
+                        <ul>
+                            <li><i class="fas fa-circle"></i>Medical Robotics</li>
+                            <li><i class="fas fa-circle"></i>Robust Control</li>
+                            <li><i class="fas fa-circle"></i>Data-Driven Control</li>
+                            <li><i class="fas fa-circle"></i>Human-Robot Interaction</li>
+                            <li><i class="fas fa-circle"></i>Rehabilitation Robotics</li>
+                            <li><i class="fas fa-circle"></i>Bioengineering</li>
+                            <li><i class="fas fa-circle"></i>Gait Analysis</li>
+                            <li><i class="fas fa-circle"></i>Generative AI for Time Series Forecasting</li>
+                            <li><i class="fas fa-circle"></i>Predictive Modeling for Neurodegenerative diseases</li>
+                        </ul>
                     </div>
                 </div>
 

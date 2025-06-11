@@ -259,140 +259,575 @@ html {
     }
 }
 
-/* Section Styles - Common */
-.section {
-    padding: 2rem 0;
+/* Section Container Styles */
+.profile-container,
+.gallery-section,
+.noticeboard-section,
+.research-areas,
+.education-section,
+.experience-section,
+.teaching-section,
+.students-section,
+.publications-section,
+.talks-section,
+.awards-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
 }
 
-/* Major Section Headers (h3) */
-.students-section h3,
+/* Section Headings */
+.gallery-section h3,
+.noticeboard-section h3,
+.research-areas h3,
+.education-section h3,
+.experience-section h3,
 .teaching-section h3,
+.students-section h3,
 .publications-section h3,
 .talks-section h3,
 .awards-section h3 {
     color: var(--primary-color);
-    font-size: var(--h3-size);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Gallery and Notice Board Section Heights */
+.gallery-wrapper,
+.notice-wrapper {
+    height: 300px;
+    overflow: hidden;
+}
+
+/* Gallery Section */
+.gallery-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.gallery-section h3 {
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #3273dc;
+}
+
+.gallery-wrapper {
+    position: relative;
+    width: 100%;
+    height: 450px;
+}
+
+@media screen and (max-width: 1023px) {
+    .gallery-wrapper {
+        height: 400px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .gallery-wrapper {
+        height: 350px;
+    }
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    position: relative;
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel-image-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 60px); /* Space for caption */
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #fff;
+}
+
+.carousel-caption {
+    padding: 10px 15px;
+    text-align: center;
+    color: #333;
+    background: #fff;
+    font-size: 0.9em;
+    line-height: 1.4;
+    height: 60px;
+    overflow-y: auto;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 3;
+}
+
+.carousel-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.carousel-nav {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.carousel-nav:hover {
+    background: #fff;
+    transform: scale(1.1);
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px; /* Position from bottom of image container */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 0;
+    z-index: 2;
+}
+
+.carousel-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5); /* Changed back to white for better visibility on images */
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    pointer-events: auto;
+}
+
+.carousel-indicator.active {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.2);
+}
+
+.carousel-indicator:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(1.1);
+}
+
+/* Spacing between profile and gallery/notice sections */
+.columns {
+    margin-top: 2rem;
+}
+
+/* Ensure consistent heights for gallery and notice sections */
+.gallery-section,
+.noticeboard-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-section h3,
+.noticeboard-section h3 {
+    margin-bottom: 1rem;
+}
+
+/* Notice Section Styles */
+.notice-wrapper {
+    position: relative;
+    height: 450px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.notice-container {
+    position: relative;
+    padding: 15px 20px;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.notice-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notice-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.notice-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.notice-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.notice-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-left: 3px solid var(--accent-color);
+}
+
+.notice-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.notice-title {
+    font-size: 1rem;
+    color: #363636;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+.notice-date {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Ensure the columns have equal height */
+.columns {
+    display: flex;
+    align-items: stretch;
+    gap: 2rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make gallery and notice sections fill their columns */
+.gallery-section, .noticeboard-section {
+    flex: 1;
+}
+
+/* Research Areas */
+.research-areas {
+    margin: 1.25rem 0;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.research-areas h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.bullet-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bullet-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.bullet-list li i {
+    font-size: 0.4rem;
+    color: var(--primary-color);
+}
+
+/* Experience Section */
+.experience-section {
+    margin: 2rem 0;
+}
+
+.experience-section > h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     font-weight: 700;
     border-bottom: 2px solid var(--primary-color);
     padding-bottom: 0.5rem;
 }
 
-/* Subsection Headers (h4) */
-.students-section h4,
-.teaching-section h4,
-.publications-section h4,
-.talks-section h4,
-.awards-section h4,
-.awards-category h4 {
-    color: var(--secondary-color);
-    font-size: var(--h4-size);
-    margin: 1.25rem 0 0.75rem;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.25rem;
+.experience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
 }
 
-/* Category Headers (h5) */
-.student-category h5,
-.publication-category h5 {
+.professional-experience,
+.administrative-experience {
+    background-color: var(--light-bg);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.professional-experience h4,
+.administrative-experience h4 {
     color: var(--secondary-color);
-    font-size: var(--h5-size);
-    margin: 1rem 0 0.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+.experience-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.experience-item {
+    background-color: white;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.experience-item h4 {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin: 0 0 0.25rem 0;
+    font-weight: 600;
+    border: none;
+    padding: 0;
+}
+
+.experience-item .institution {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin: 0 0 0.25rem 0;
+}
+
+.experience-item .duration {
+    color: var(--accent-color);
+    font-size: 0.85rem;
     font-weight: 500;
+    margin: 0;
 }
 
 /* Profile Section */
 .profile-container {
     display: flex;
-    gap: 2.5rem;
-    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
     background-color: white;
-    padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    margin-top: 1.5rem;
 }
 
 .profile-image-container {
-    flex: 0 0 350px;
+    flex: 0 0 300px;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .profile-image-container img {
     width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    display: block;
-}
-
-.profile-image-container img:hover {
-    transform: scale(1.02);
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .profile-info h1 {
+    font-size: 2.25rem;
+    color: var(--primary-color);
     margin: 0;
-    line-height: 1.2;
-    font-weight: 700;
+    line-height: 1.1;
 }
 
 .profile-info h2 {
-    margin: 0.5rem 0;
-    line-height: 1.2;
-}
-
-.profile-info .affiliation,
-.profile-info .institution {
-    font-size: var(--small-size);
+    font-size: 1.35rem;
     color: var(--secondary-color);
-    margin-bottom: 0.3rem;
+    margin: 0;
+    font-weight: 500;
 }
 
-.profile-bio {
-    margin: 2rem 0;
-    line-height: 1.8;
-    font-size: var(--body-size);
-    color: var(--text-color);
-    text-align: justify;
+.affiliation, .institution {
+    color: var(--secondary-color);
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
 }
 
-/* Profile Links */
+.contact-info {
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.contact-info p {
+    margin: 0.35rem 0;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.contact-info i {
+    width: 16px;
+    color: var(--primary-color);
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
 .profile-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin: 1.5rem 0;
-    justify-content: flex-start;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
 }
 
-.profile-links .link-item {
+.profile-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
     padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
     border-radius: 8px;
-    background-color: var(--light-bg);
-    transition: all 0.3s ease;
-    min-width: 140px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.profile-links .link-item:hover {
-    background-color: var(--accent-color);
-    color: white;
+.profile-btn i {
+    font-size: 1rem;
+}
+
+/* Button Variants */
+.scholar-btn {
+    background-color: #f4f0ff;
+    color: #7c4dff;
+}
+
+.linkedin-btn {
+    background-color: #e8f4ff;
+    color: #0077b5;
+}
+
+.iitp-btn {
+    background-color: #fff4e6;
+    color: #ff9800;
+}
+
+.orcid-btn {
+    background-color: #e8fff4;
+    color: #00a699;
+}
+
+.cv-btn {
+    background-color: #ffe8ec;
+    color: #ff4081;
+}
+
+/* Button Hover Effects */
+.profile-btn:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    filter: brightness(0.95);
 }
 
-.profile-links .link-item img {
-    width: 20px;
-    height: 20px;
-    opacity: 0.8;
+.scholar-btn:hover {
+    background-color: #7c4dff;
+    color: white;
+}
+
+.linkedin-btn:hover {
+    background-color: #0077b5;
+    color: white;
+}
+
+.iitp-btn:hover {
+    background-color: #ff9800;
+    color: white;
+}
+
+.orcid-btn:hover {
+    background-color: #00a699;
+    color: white;
+}
+
+.cv-btn:hover {
+    background-color: #ff4081;
+    color: white;
+}
+
+.profile-bio {
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    color: var(--secondary-color);
+    text-align: justify;
+    font-size: 0.95rem;
 }
 
 /* List Item Common Styles */
@@ -442,41 +877,6 @@ html {
 .talk-content,
 .award-content {
     text-align: justify;
-}
-
-/* Research Areas */
-.research-areas {
-    margin: 1.25rem 0;
-    padding: 1rem;
-    background-color: var(--light-bg);
-    border-radius: 8px;
-}
-
-.research-areas h3 {
-    color: var(--primary-color);
-    font-size: 1.3rem;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.3rem;
-}
-
-.research-areas ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0;
-}
-
-.research-areas li {
-    padding: 0.5rem 0.75rem;
-    background-color: white;
-    border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    font-size: var(--body-size);
-    line-height: 1.3;
 }
 
 /* Education Section */
@@ -862,441 +1262,6 @@ html {
     color: var(--text-color);
 }
 
-/* Experience Section Styles */
-.experience-section > h3 {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 0.5rem;
-}
-
-.experience-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-.professional-experience,
-.administrative-experience {
-    background-color: var(--light-bg);
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.professional-experience h4,
-.administrative-experience h4 {
-    color: var(--secondary-color);
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.3rem;
-}
-
-.experience-items {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.experience-item {
-    background-color: white;
-    padding: 0.75rem;
-    border-radius: 6px;
-    border-left: 3px solid var(--accent-color);
-}
-
-.experience-item h4 {
-    color: var(--primary-color);
-    font-size: 1rem;
-    margin: 0 0 0.25rem 0;
-    font-weight: 600;
-    border: none;
-    padding: 0;
-}
-
-.experience-item .institution {
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-    margin: 0 0 0.25rem 0;
-}
-
-.experience-item .duration {
-    color: var(--accent-color);
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin: 0;
-}
-
-/* Gallery Section */
-.gallery-section {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
-}
-
-.gallery-section h3 {
-    color: var(--primary-color);
-    font-size: var(--h3-size);
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 0.5rem;
-}
-
-.gallery-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    height: 400px;
-    background-color: var(--light-bg);
-}
-
-.gallery-container {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    height: 100%;
-    padding: 1rem;
-}
-
-.gallery-container::-webkit-scrollbar {
-    display: none;
-}
-
-.gallery-slide {
-    flex: 0 0 auto;
-    position: relative;
-    height: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: white;
-}
-
-.gallery-slide img {
-    height: 100%;
-    width: auto;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.gallery-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-}
-
-/* Noticeboard Section */
-.noticeboard-section {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    height: 100%;
-}
-
-.noticeboard-section h3 {
-    color: var(--primary-color);
-    font-size: var(--h3-size);
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 0.5rem;
-}
-
-.notice-wrapper {
-    position: relative;
-    height: 400px;
-    overflow: hidden;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px; /* Space for reset button */
-}
-
-.notice-container {
-    position: relative;
-    padding: 15px;
-    overflow-y: auto;
-    height: 100%;
-    scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1;
-}
-
-.notice-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.notice-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.notice-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-.notice-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-.notice-scroll {
-    position: absolute;
-    width: calc(100% - 30px);
-    transition: transform 0.5s ease-out;
-}
-
-.notice-item {
-    display: flex;
-    align-items: flex-start;
-    padding: 15px;
-    margin-bottom: 15px;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    text-align: justify;
-    line-height: 1.6;
-}
-
-.notice-bullet {
-    flex-shrink: 0;
-    margin-right: 10px;
-    color: #363636;
-    font-weight: bold;
-}
-
-.notice-content {
-    flex-grow: 1;
-}
-
-.notice-title {
-    font-size: 1.1rem;
-    color: #363636;
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-
-.notice-date {
-    font-size: 0.85rem;
-    color: #666;
-    font-style: italic;
-}
-
-.notice-reset-button {
-    position: absolute;
-    bottom: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #4a4a4a;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-    opacity: 0.8;
-}
-
-.notice-reset-button:hover {
-    background: #363636;
-    opacity: 1;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .profile-container {
-        gap: 2rem;
-        padding: 1.5rem;
-    }
-
-    .profile-image-container {
-        flex: 0 0 300px;
-    }
-
-    .gallery-wrapper {
-        height: 350px;
-    }
-}
-
-@media (max-width: 992px) {
-    .profile-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 1rem;
-    }
-
-    .profile-image-container {
-        flex: 0 0 auto;
-        width: 250px;
-        margin-bottom: 1rem;
-    }
-
-    .profile-info {
-        width: 100%;
-    }
-
-    .profile-links {
-        justify-content: center;
-    }
-
-    .columns {
-        flex-direction: column;
-    }
-
-    .column {
-        width: 100% !important;
-        padding: 1rem 0;
-    }
-
-    .gallery-wrapper {
-        height: 300px;
-    }
-
-    .notice-wrapper {
-        height: 250px;
-    }
-}
-
-@media (max-width: 768px) {
-    .profile-container {
-        padding: 1rem;
-        gap: 0.5rem;
-    }
-
-    .profile-image-container {
-        width: 200px;
-        margin-bottom: 0.5rem;
-    }
-
-    .profile-info h1 {
-        margin-top: 0;
-    }
-
-    .profile-links {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .link-item {
-        min-width: calc(50% - 0.5rem);
-    }
-
-    .gallery-wrapper {
-        height: 250px;
-    }
-
-    .notice-wrapper {
-        height: 200px;
-    }
-
-    .publications-section {
-        padding: 1.5rem;
-    }
-
-    .publications-section h3 {
-        font-size: calc(var(--h3-size) * 0.9);
-    }
-
-    .publications-section h4 {
-        font-size: calc(var(--h4-size) * 0.9);
-    }
-
-    .publication-item {
-        margin-left: 0;
-    }
-
-    .experience-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .professional-experience,
-    .administrative-experience {
-        margin-bottom: 0;
-    }
-}
-
-@media (max-width: 576px) {
-    .profile-container {
-        margin: 0.5rem;
-        padding: 1rem;
-        gap: 0.25rem;
-    }
-
-    .profile-image-container {
-        width: 180px;
-        margin-bottom: 0.25rem;
-    }
-
-    .profile-info h1 {
-        font-size: 1.75rem;
-    }
-
-    .profile-info h2 {
-        font-size: 1.25rem;
-    }
-
-    .link-item {
-        min-width: 100%;
-    }
-
-    .gallery-wrapper {
-        height: 200px;
-    }
-
-    .notice-wrapper {
-        height: 180px;
-    }
-
-    .gallery-section,
-    .noticeboard-section {
-        padding: 1rem;
-    }
-
-    .publications-section {
-        padding: 1rem;
-    }
-
-    .publications-section h3 {
-        font-size: calc(var(--h3-size) * 0.85);
-    }
-
-    .publications-section h4 {
-        font-size: calc(var(--h4-size) * 0.85);
-    }
-
-    .publications-list {
-        padding-left: 0;
-    }
-}
-
 /* Footer */
 footer {
     background-color: white;
@@ -1343,31 +1308,6 @@ a:hover {
 }
 
 /* Carousel Styles */
-.carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 6px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-}
-
-.carousel-container {
-    display: flex;
-    transition: transform 0.2s ease-in-out;
-    height: 400px;
-}
-
-.carousel-slide {
-    min-width: 100%;
-    position: relative;
-}
-
-.carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .carousel-navigation {
     position: absolute;
     top: 50%;
@@ -1428,93 +1368,359 @@ a:hover {
     transform: scale(1.2);
 }
 
-.carousel-caption {
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+    .profile-container {
+        gap: 1.25rem;
+        padding: 1.25rem;
+    }
+
+    .profile-image-container {
+        flex: 0 0 280px;
+        height: 280px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .profile-image-container {
+        flex: 0 0 240px;
+        width: 240px;
+        height: 240px;
+    }
+
+    .profile-links {
+        justify-content: center;
+    }
+
+    .contact-info {
+        text-align: center;
+    }
+
+    .contact-info p {
+        justify-content: center;
+    }
+
+    .profile-bio {
+        text-align: left;
+    }
+
+    .section-heading {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .experience-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .professional-experience,
+    .administrative-experience {
+        padding: 1.25rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .section-heading {
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+    }
+
+    .bullet-list li {
+        font-size: 0.95rem;
+        padding: 0.35rem 0;
+    }
+
+    .experience-item {
+        padding: 0.6rem;
+    }
+
+    .experience-item h4 {
+        font-size: 0.95rem;
+    }
+
+    .experience-item .institution {
+        font-size: 0.85rem;
+    }
+
+    .experience-item .duration {
+        font-size: 0.8rem;
+    }
+
+    .gallery-wrapper {
+        height: 400px;
+    }
+    
+    .carousel-slide img {
+        height: calc(100% - 70px);
+    }
+    
+    .carousel-caption {
+        height: 70px;
+        font-size: 0.95rem;
+        padding: 10px 15px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+    .gallery-wrapper {
+        height: 420px;
+    }
+    
+    .carousel-slide img {
+        height: calc(100% - 75px);
+    }
+    
+    .carousel-caption {
+        height: 75px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .section-heading {
+        font-size: 1.25rem;
+    }
+
+    .professional-experience,
+    .administrative-experience {
+        padding: 1rem;
+    }
+
+    .experience-items {
+        gap: 1.25rem;
+    }
+}
+
+/* Responsive adjustments for section containers */
+@media screen and (max-width: 768px) {
+    .profile-container,
+    .gallery-section,
+    .noticeboard-section,
+    .research-areas,
+    .education-section,
+    .experience-section,
+    .teaching-section,
+    .students-section,
+    .publications-section,
+    .talks-section,
+    .awards-section {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .profile-container,
+    .gallery-section,
+    .noticeboard-section,
+    .research-areas,
+    .education-section,
+    .experience-section,
+    .teaching-section,
+    .students-section,
+    .publications-section,
+    .talks-section,
+    .awards-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Custom Scrollbar Styles */
+.notice-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notice-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.notice-wrapper::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.notice-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+#notice-container {
+    position: relative;
+    padding-right: 10px;
+}
+
+.notice-item {
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.notice-item:hover {
+    background-color: var(--light-bg);
+}
+
+.notice-item:last-child {
+    border-bottom: none;
+}
+
+.notice-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.notice-title {
+    font-weight: 500;
+    color: var(--primary-color);
+    font-size: var(--body-size);
+}
+
+.notice-date {
+    font-size: var(--small-size);
+    color: #666;
+}
+
+.notice-reset-button {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.7);
+    bottom: 1rem;
+    right: 1rem;
+    background: var(--primary-color);
     color: white;
-    padding: 15px;
-    text-align: center;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    z-index: 10;
+}
+
+.notice-reset-button:hover {
     opacity: 1;
+}
+
+/* Publications Styles */
+.publication-year {
+    margin-bottom: 2rem;
+}
+
+.publication-year h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.publication-list {
+    list-style: none;
+    padding: 0;
+}
+
+.publication-item {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.publication-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
+.publication-title {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.publication-authors {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+}
+
+.publication-venue {
+    font-style: italic;
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+}
+
+.publication-doi {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.publication-doi:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #dc3545;
+    padding: 1rem;
+    background-color: #f8d7da;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.no-items {
+    color: #666;
+    font-style: italic;
+    padding: 1rem 0;
 }
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
-    .carousel-container {
-        height: 300px;
+    .columns {
+        flex-direction: column;
     }
 
-    .carousel-nav {
-        width: 35px;
-        height: 35px;
+    .gallery-section,
+    .noticeboard-section {
+        height: 35vh; /* Taller on mobile for better visibility */
+        width: 100%;
     }
 
-    .carousel-caption {
-        padding: 10px;
-        font-size: 0.9rem;
+    .column.is-8,
+    .column.is-4 {
+        width: 100%;
+        padding: 0;
     }
 }
 
-/* Section Container Styles */
-.profile-container,
-.gallery-section,
-.noticeboard-section,
-.research-areas,
-.education-section,
-.experience-section,
-.teaching-section,
-.students-section,
-.publications-section,
-.talks-section,
-.awards-section {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
-}
-
-/* Gallery and Notice Board Section Heights */
-.gallery-wrapper,
-.notice-wrapper {
-    height: 400px;
-    overflow: hidden;
-}
-
-/* Spacing between profile and gallery/notice sections */
-.columns {
-    margin-top: 2rem;
-}
-
-/* Ensure consistent heights for gallery and notice sections */
-.gallery-section,
-.noticeboard-section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.gallery-section h3,
-.noticeboard-section h3 {
-    margin-bottom: 1rem;
-}
-
-.bold-name {
-    font-weight: 700;
-}
-
-.nav-menu-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-@media screen and (max-width: 768px) {
-    .nav-menu-container {
-        order: 1;
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+    .gallery-section,
+    .noticeboard-section {
+        height: 30vh; /* Slightly taller on tablets */
     }
-    
-    // ... existing mobile styles ...
+}
+
+/* Ensure minimum height */
+@media screen and (min-height: 1000px) {
+    .gallery-section,
+    .noticeboard-section {
+        height: 20vh; /* Smaller percentage for very tall screens */
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .gallery-section,
+    .noticeboard-section {
+        height: 40vh; /* Larger percentage for very short screens */
+    }
 } 

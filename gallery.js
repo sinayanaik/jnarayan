@@ -1,141 +1,145 @@
 // Gallery functionality
-let currentSlide = 0;
-let galleryImages = [];
-
-async function fetchGalleryImages() {
-    const { data, error } = await supabaseClient
-        .from('gallery')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-    if (error) {
-        console.error('Error fetching gallery images:', error);
-        return;
-    }
-
-    galleryImages = data;
-    renderGallery();
-    setupCarousel();
-}
-
-function renderGallery() {
-    const container = document.getElementById('gallery-container');
-    const indicators = document.getElementById('gallery-indicators');
-    
-    if (!galleryImages || galleryImages.length === 0) {
-        container.innerHTML = '<p class="has-text-centered">No images available</p>';
-        return;
-    }
-
-    // Create slides
-    container.innerHTML = galleryImages.map((item, index) => `
-        <div class="carousel-slide" data-index="${index}">
-            <img src="${item.image_url}" alt="Gallery image ${index + 1}">
-            ${item.caption ? `<div class="carousel-caption">${item.caption}</div>` : ''}
-        </div>
-    `).join('');
-
-    // Create indicators
-    indicators.innerHTML = galleryImages.map((_, index) => `
-        <button class="carousel-indicator ${index === 0 ? 'active' : ''}" 
-                data-index="${index}" 
-                aria-label="Go to slide ${index + 1}">
-        </button>
-    `).join('');
-}
-
-function setupCarousel() {
-    const container = document.getElementById('gallery-container');
-    const indicators = document.getElementById('gallery-indicators');
-    const prevBtn = document.querySelector('.carousel-nav.prev');
-    const nextBtn = document.querySelector('.carousel-nav.next');
-
-    // Set initial position
-    updateSlidePosition();
-
-    // Event listeners for navigation buttons
-    prevBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide - 1 + galleryImages.length) % galleryImages.length;
-        updateSlidePosition();
-    });
-
-    nextBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide + 1) % galleryImages.length;
-        updateSlidePosition();
-    });
-
-    // Event listeners for indicators
-    indicators.addEventListener('click', (e) => {
-        const indicator = e.target.closest('.carousel-indicator');
-        if (!indicator) return;
-
-        currentSlide = parseInt(indicator.dataset.index);
-        updateSlidePosition();
-    });
-
-    // Auto-advance slides every 3 seconds
-    let autoAdvance = setInterval(() => {
-        if (!document.hidden) {
-            currentSlide = (currentSlide + 1) % galleryImages.length;
-            updateSlidePosition();
-        }
-    }, 2000);
-
-    // Pause auto-advance on hover
-    container.addEventListener('mouseenter', () => clearInterval(autoAdvance));
-    container.addEventListener('mouseleave', () => {
-        autoAdvance = setInterval(() => {
-            if (!document.hidden) {
-                currentSlide = (currentSlide + 1) % galleryImages.length;
-                updateSlidePosition();
+document.addEventListener('DOMContentLoaded', async function() {
+    async function fetchGalleryItems() {
+        try {
+            if (!window.supabaseClient) {
+                throw new Error('Supabase client not initialized');
             }
-        }, 2000);
-    });
 
-    // Touch support
-    let touchStartX = 0;
-    let touchEndX = 0;
+            const { data, error } = await window.supabaseClient
+                .from('gallery')
+                .select('*')
+                .order('created_at', { ascending: false });
 
-    container.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-    });
-
-    container.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchEndX - touchStartX;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe right - go to previous
-                currentSlide = (currentSlide - 1 + galleryImages.length) % galleryImages.length;
-            } else {
-                // Swipe left - go to next
-                currentSlide = (currentSlide + 1) % galleryImages.length;
+            if (error) {
+                console.error('Error fetching gallery items:', error);
+                const container = document.getElementById('gallery-container');
+                if (container) {
+                    container.innerHTML = '<p class="has-text-centered">Error loading gallery images</p>';
+                }
+                return null;
             }
-            updateSlidePosition();
+
+            if (!data || data.length === 0) {
+                const container = document.getElementById('gallery-container');
+                if (container) {
+                    container.innerHTML = '<p class="has-text-centered">No images available</p>';
+                }
+                return null;
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error in fetchGalleryItems:', error);
+            const container = document.getElementById('gallery-container');
+            if (container) {
+                container.innerHTML = '<p class="has-text-centered">Error loading gallery images</p>';
+            }
+            return null;
         }
     }
-}
 
-function updateSlidePosition() {
-    const container = document.getElementById('gallery-container');
-    const indicators = document.querySelectorAll('.carousel-indicator');
+    function initGallery(galleryData) {
+        const container = document.getElementById('gallery-container');
+        if (!container || !galleryData) return;
 
-    // Update slide position
-    container.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Clear existing content
+        container.innerHTML = '';
 
-    // Update indicators
-    indicators.forEach((indicator, index) => {
-        indicator.classList.toggle('active', index === currentSlide);
-    });
-}
+        // Create indicators container
+        const indicatorsContainer = document.createElement('div');
+        indicatorsContainer.className = 'carousel-indicators';
+        
+        // Create indicators
+        galleryData.forEach((_, index) => {
+            const indicator = document.createElement('button');
+            indicator.className = `carousel-indicator${index === 0 ? ' active' : ''}`;
+            indicator.setAttribute('aria-label', `Slide ${index + 1}`);
+            indicator.addEventListener('click', () => goToSlide(index));
+            indicatorsContainer.appendChild(indicator);
+        });
 
-// Initialize gallery when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    fetchGalleryImages();
+        // Create slides
+        galleryData.forEach((item, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'carousel-image-container';
+            
+            // Add image
+            imageContainer.innerHTML = `<img src="${item.image_url}" alt="Gallery image ${index + 1}" class="carousel-image">`;
+            
+            // Clone and append indicators to each image container
+            const slideIndicators = indicatorsContainer.cloneNode(true);
+            slideIndicators.querySelectorAll('.carousel-indicator').forEach((indicator, i) => {
+                indicator.addEventListener('click', () => goToSlide(i));
+            });
+            imageContainer.appendChild(slideIndicators);
+            
+            // Add caption
+            const caption = document.createElement('div');
+            caption.className = 'carousel-caption';
+            caption.textContent = item.caption || '';
+            
+            slide.appendChild(imageContainer);
+            slide.appendChild(caption);
+            container.appendChild(slide);
+        });
+
+        // Set up navigation
+        const prevButton = document.querySelector('.carousel-nav.prev');
+        const nextButton = document.querySelector('.carousel-nav.next');
+
+        let currentSlide = 0;
+        const totalSlides = galleryData.length;
+
+        function updateSlidePosition() {
+            container.style.transform = `translateX(-${currentSlide * 100}%)`;
+            // Update indicators for all slides
+            document.querySelectorAll('.carousel-slide').forEach((slide) => {
+                slide.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentSlide);
+                });
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlidePosition();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlidePosition();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlidePosition();
+        }
+
+        // Event listeners
+        if (prevButton) prevButton.addEventListener('click', prevSlide);
+        if (nextButton) nextButton.addEventListener('click', nextSlide);
+
+        // Optional: Auto-advance slides
+        let autoAdvance = setInterval(nextSlide, 5000);
+
+        // Pause auto-advance on hover
+        container.parentElement.addEventListener('mouseenter', () => clearInterval(autoAdvance));
+        container.parentElement.addEventListener('mouseleave', () => {
+            clearInterval(autoAdvance);
+            autoAdvance = setInterval(nextSlide, 5000);
+        });
+
+        // Initial position
+        updateSlidePosition();
+    }
+
+    // Initialize gallery with data from Supabase
+    const galleryData = await fetchGalleryItems();
+    if (galleryData) {
+        initGallery(galleryData);
+    }
 }); 
