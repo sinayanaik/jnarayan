@@ -1,11 +1,28 @@
 /* Global Styles */
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #34495e;
-    --accent-color: #3498db;
-    --text-color: #2c3e50;
-    --light-bg: #f8f9fa;
-    --border-color: #e9ecef;
+    /* Primary Colors */
+    --primary-light: #e3f2fd;
+    --primary-accent: #2196f3;
+    --primary-dark: #1976d2;
+    
+    /* Neutral Colors */
+    --bg-main: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-hover: #f5f7fa;
+    
+    /* Text Colors */
+    --text-primary: #2c3e50;
+    --text-secondary: #546e7a;
+    --text-light: #78909c;
+    
+    /* Border Colors */
+    --border-light: #e0e6ed;
+    --border-accent: #bbdefb;
+    
+    /* Shadow */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
 }
 
 /* Typography Scale */
@@ -23,13 +40,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--light-bg);
+    color: var(--text-primary);
+    background-color: var(--bg-main);
 }
 
 .container {
@@ -78,13 +96,13 @@ html {
 .nav-brand span {
     font-size: 1.35rem;
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--primary-dark);
     letter-spacing: -0.5px;
     transition: color 0.3s ease;
 }
 
 .nav-brand span:hover {
-    color: var(--accent-color);
+    color: var(--primary-accent);
 }
 
 .nav-menu {
@@ -94,7 +112,7 @@ html {
 }
 
 .nav-item {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.92rem;
@@ -106,7 +124,7 @@ html {
 }
 
 .nav-item:hover {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     background-color: rgba(0, 0, 0, 0.03);
     text-decoration: none;
     transform: translateY(-1px);
@@ -119,7 +137,7 @@ html {
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: var(--primary-color);
+    background-color: var(--primary-dark);
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
@@ -129,7 +147,7 @@ html {
 }
 
 .nav-item.active {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     background-color: rgba(0, 0, 0, 0.04);
 }
 
@@ -165,7 +183,7 @@ html {
 .hamburger-inner::after {
     width: 24px;
     height: 2px;
-    background-color: var(--primary-color);
+    background-color: var(--primary-dark);
     position: absolute;
     transition: all 0.3s ease;
     border-radius: 2px;
@@ -193,7 +211,7 @@ html {
 /* Hamburger Animation */
 .hamburger.is-active .hamburger-inner {
     transform: rotate(45deg);
-    background-color: var(--accent-color);
+    background-color: var(--primary-accent);
 }
 
 .hamburger.is-active .hamburger-inner::before {
@@ -204,7 +222,7 @@ html {
 .hamburger.is-active .hamburger-inner::after {
     bottom: 0;
     transform: rotate(-90deg);
-    background-color: var(--accent-color);
+    background-color: var(--primary-accent);
 }
 
 /* Responsive Navbar */
@@ -271,11 +289,12 @@ html {
 .publications-section,
 .talks-section,
 .awards-section {
-    background-color: white;
+    background-color: var(--bg-card);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-md);
     margin-bottom: 2rem;
+    border: 1px solid var(--border-light);
 }
 
 /* Section Headings */
@@ -289,12 +308,12 @@ html {
 .publications-section h3,
 .talks-section h3,
 .awards-section h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-accent);
 }
 
 /* Gallery and Notice Board Section Heights */
@@ -379,16 +398,17 @@ html {
 .carousel-caption {
     padding: 10px 15px;
     text-align: center;
-    color: #333;
-    background: #fff;
+    color: var(--text-primary);
+    background: var(--bg-card);
     font-size: 0.9em;
     line-height: 1.4;
     height: 60px;
     overflow-y: auto;
     border-radius: 0 0 8px 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-sm);
     position: relative;
     z-index: 3;
+    border-top: 1px solid var(--border-light);
 }
 
 .carousel-navigation {
@@ -404,7 +424,7 @@ html {
 }
 
 .carousel-nav {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--bg-card);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -415,12 +435,17 @@ html {
     cursor: pointer;
     transition: all 0.3s ease;
     pointer-events: auto;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .carousel-nav:hover {
-    background: #fff;
+    background: var(--primary-light);
     transform: scale(1.1);
+}
+
+.carousel-nav .icon {
+    color: var(--text-primary);
+    font-size: 1.2rem;
 }
 
 .carousel-indicators {
@@ -512,30 +537,38 @@ html {
 }
 
 .notice-item {
-    padding: 15px;
-    margin-bottom: 15px;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border-left: 3px solid var(--accent-color);
+    padding: 0.8rem;
+    border-left: 3px solid var(--primary-accent);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    background-color: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+}
+
+.notice-item:hover {
+    background-color: var(--bg-hover);
+}
+
+.notice-item:last-child {
+    border-bottom: none;
 }
 
 .notice-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.3rem;
 }
 
 .notice-title {
-    font-size: 1rem;
-    color: #363636;
-    line-height: 1.4;
-    text-align: justify;
+    font-weight: 500;
+    color: #333333;
+    font-size: var(--body-size);
 }
 
 .notice-date {
-    font-size: 0.9rem;
-    color: #666;
+    font-size: var(--small-size);
+    color: #666666;
     font-style: italic;
 }
 
@@ -565,11 +598,11 @@ html {
 }
 
 .research-areas h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 600;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-accent);
     padding-bottom: 0.5rem;
 }
 
@@ -584,13 +617,13 @@ html {
     align-items: center;
     gap: 0.75rem;
     padding: 0.4rem 0;
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: 1rem;
 }
 
 .bullet-list li i {
     font-size: 0.4rem;
-    color: var(--primary-color);
+    color: var(--primary-accent);
 }
 
 /* Experience Section */
@@ -599,11 +632,11 @@ html {
 }
 
 .experience-section > h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     font-weight: 700;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-accent);
     padding-bottom: 0.5rem;
 }
 
@@ -615,18 +648,18 @@ html {
 
 .professional-experience,
 .administrative-experience {
-    background-color: var(--light-bg);
+    background-color: var(--bg-card);
     padding: 1rem;
     border-radius: 8px;
 }
 
 .professional-experience h4,
 .administrative-experience h4 {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: 1.2rem;
     margin-bottom: 1rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-light);
     padding-bottom: 0.3rem;
 }
 
@@ -637,14 +670,20 @@ html {
 }
 
 .experience-item {
-    background-color: white;
-    padding: 0.75rem;
+    background-color: var(--bg-card);
+    padding: 1rem;
     border-radius: 6px;
-    border-left: 3px solid var(--accent-color);
+    border-left: 3px solid var(--primary-accent);
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.experience-item:hover {
+    background-color: var(--bg-hover);
 }
 
 .experience-item h4 {
-    color: var(--primary-color);
+    color: var(--text-primary);
     font-size: 1rem;
     margin: 0 0 0.25rem 0;
     font-weight: 600;
@@ -653,13 +692,13 @@ html {
 }
 
 .experience-item .institution {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin: 0 0 0.25rem 0;
 }
 
 .experience-item .duration {
-    color: var(--accent-color);
+    color: var(--text-light);
     font-size: 0.85rem;
     font-weight: 500;
     margin: 0;
@@ -670,9 +709,9 @@ html {
     display: flex;
     gap: 1.5rem;
     padding: 1.5rem;
-    background-color: white;
+    background-color: var(--bg-card);
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-md);
 }
 
 .profile-image-container {
@@ -697,20 +736,20 @@ html {
 
 .profile-info h1 {
     font-size: 2.25rem;
-    color: var(--primary-color);
+    color: var(--primary-dark);
     margin: 0;
     line-height: 1.1;
 }
 
 .profile-info h2 {
     font-size: 1.35rem;
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     margin: 0;
     font-weight: 500;
 }
 
 .affiliation, .institution {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     margin: 0;
     font-size: 1rem;
     line-height: 1.4;
@@ -725,7 +764,7 @@ html {
 
 .contact-info p {
     margin: 0.35rem 0;
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: 0.95rem;
     display: flex;
     align-items: center;
@@ -735,7 +774,7 @@ html {
 
 .contact-info i {
     width: 16px;
-    color: var(--primary-color);
+    color: var(--primary-dark);
     opacity: 0.8;
     flex-shrink: 0;
 }
@@ -757,7 +796,9 @@ html {
     text-decoration: none;
     border-radius: 8px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-accent);
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
 }
 
 .profile-btn i {
@@ -825,7 +866,7 @@ html {
 .profile-bio {
     margin-top: 0.5rem;
     line-height: 1.5;
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     text-align: justify;
     font-size: 0.95rem;
 }
@@ -844,7 +885,7 @@ html {
 .bullet {
     flex-shrink: 0;
     padding-right: 0.5rem;
-    color: var(--accent-color);
+    color: var(--primary-accent);
 }
 
 .item-content {
@@ -863,14 +904,14 @@ html {
 }
 
 .student-year {
-    color: var(--accent-color);
+    color: var(--primary-accent);
 }
 
 .thesis-title {
     display: block;
     margin-top: 0.25rem;
     font-style: italic;
-    color: var(--secondary-color);
+    color: var(--text-secondary);
 }
 
 /* Talk and Award Sections */
@@ -885,11 +926,11 @@ html {
 }
 
 .education-section h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.3rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--primary-accent);
     padding-bottom: 0.3rem;
 }
 
@@ -900,14 +941,14 @@ html {
 }
 
 .education-item {
-    background-color: var(--light-bg);
+    background-color: var(--bg-card);
     padding: 0.75rem 1rem;
     border-radius: 4px;
-    border-left: 3px solid var(--primary-color);
+    border-left: 3px solid var(--primary-accent);
 }
 
 .education-item h4 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.1rem;
     margin-bottom: 0.25rem;
     font-weight: 600;
@@ -917,13 +958,13 @@ html {
 }
 
 .education-item .institution {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: 0.95rem;
     margin: 0;
 }
 
 .education-item .duration {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     font-size: 0.85rem;
     font-weight: 500;
 }
@@ -934,11 +975,11 @@ html {
 }
 
 .teaching-section h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.3rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--primary-accent);
     padding-bottom: 0.3rem;
 }
 
@@ -948,7 +989,7 @@ html {
 }
 
 .teaching-section h4 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.2rem;
     margin: 1rem 0 0.75rem;
     font-weight: 600;
@@ -967,18 +1008,18 @@ html {
     line-height: 1.4;
     margin-left: 0.5rem;
     padding: 0.5rem;
-    background-color: var(--light-bg);
+    background-color: var(--bg-card);
     border-radius: 4px;
 }
 
 .teaching-item .bullet {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     flex-shrink: 0;
 }
 
 .teaching-item .course-name {
     font-size: 0.95rem;
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 /* Students Section */
@@ -987,11 +1028,11 @@ html {
 }
 
 .students-section h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.3rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--primary-accent);
     padding-bottom: 0.3rem;
 }
 
@@ -1007,7 +1048,7 @@ html {
 }
 
 .students-section h4 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.2rem;
     margin: 1.5rem 0 1rem;
     font-weight: 600;
@@ -1023,7 +1064,7 @@ html {
 
 .student-category h5 {
     margin-bottom: 1rem;
-    color: var(--primary-color);
+    color: var(--primary-dark);
 }
 
 .student-item {
@@ -1036,21 +1077,21 @@ html {
     align-items: baseline;
     gap: 0.5rem;
     font-size: 0.95rem;
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .student-name .bullet {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     flex-shrink: 0;
 }
 
 .student-name .joint-supervisor {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
 .student-name .joint-supervisor a {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     text-decoration: none;
 }
 
@@ -1062,12 +1103,12 @@ html {
     margin-top: 0.25rem;
     margin-left: 1rem;
     font-size: 0.9rem;
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-style: italic;
 }
 
 .student-year {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     font-size: 0.85rem;
     font-weight: 500;
 }
@@ -1078,11 +1119,11 @@ html {
 }
 
 .talks-section h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.3rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--primary-accent);
     padding-bottom: 0.3rem;
 }
 
@@ -1095,18 +1136,18 @@ html {
 }
 
 .talk-item .bullet {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     flex-shrink: 0;
 }
 
 .talk-content {
     flex: 1;
     font-size: 0.95rem;
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .talk-year {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     font-weight: 500;
 }
 
@@ -1116,11 +1157,11 @@ html {
 }
 
 .awards-section h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     font-weight: 700;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-accent);
     padding-bottom: 0.5rem;
 }
 
@@ -1133,11 +1174,11 @@ html {
 }
 
 .awards-category h4 {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: 1.25rem;
     margin: 1.25rem 0 0.75rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--primary-accent);
     padding-bottom: 0.25rem;
 }
 
@@ -1150,19 +1191,19 @@ html {
 }
 
 .award-item .bullet {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     flex-shrink: 0;
 }
 
 .award-content {
     flex: 1;
     font-size: 0.95rem;
-    color: var(--text-color);
+    color: var(--text-primary);
     line-height: 1.4;
 }
 
 .award-year {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     font-weight: 500;
 }
 
@@ -1177,39 +1218,39 @@ html {
 
 /* Publications Section */
 .publications-section {
-    background-color: white;
+    background-color: var(--bg-card);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-md);
 }
 
 .publications-section h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: var(--h3-size);
     margin-bottom: 1.5rem;
     font-weight: 700;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-accent);
     padding-bottom: 0.5rem;
 }
 
 .publications-section h4 {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: var(--h4-size);
     margin: 1.5rem 0 1rem;
     font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--primary-accent);
     padding-bottom: 0.25rem;
 }
 
 .publications-note {
     margin-bottom: 1.5rem;
     font-size: var(--body-size);
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
 .publications-note a {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     text-decoration: none;
     font-weight: 500;
 }
@@ -1230,7 +1271,7 @@ html {
 }
 
 .year-heading {
-    color: var(--secondary-color);
+    color: var(--text-secondary);
     font-size: var(--body-size);
     font-weight: 500;
     margin-bottom: 0.75rem;
@@ -1253,22 +1294,22 @@ html {
 }
 
 .publication-item .bullet {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     flex-shrink: 0;
 }
 
 .publication-item .pub-title {
     font-size: var(--body-size);
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 /* Footer */
 footer {
-    background-color: white;
+    background-color: var(--bg-card);
     padding: 2rem 0;
     text-align: center;
     margin-top: 4rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-light);
 }
 
 /* Fix long text wrapping */
@@ -1279,7 +1320,7 @@ footer {
     margin-top: 0.2rem;
     margin-left: 1.5rem;
     font-style: italic;
-    color: var(--secondary-color);
+    color: var(--text-secondary);
 }
 
 /* Section Headers */
@@ -1299,7 +1340,7 @@ h3, h4, h5 {
 
 /* Links */
 a {
-    color: var(--accent-color);
+    color: var(--primary-accent);
     text-decoration: none;
 }
 
@@ -1321,7 +1362,7 @@ a:hover {
 }
 
 .carousel-nav {
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--bg-card);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -1335,12 +1376,12 @@ a:hover {
 }
 
 .carousel-nav:hover {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--primary-light);
     transform: scale(1.1);
 }
 
 .carousel-nav .icon {
-    color: #363636;
+    color: var(--text-primary);
     font-size: 1.2rem;
 }
 
@@ -1560,14 +1601,16 @@ a:hover {
 
 .notice-item {
     padding: 0.8rem;
-    border-bottom: 1px solid var(--border-color);
+    border-left: 3px solid var(--primary-accent);
     transition: background-color 0.3s ease;
     cursor: pointer;
     margin-bottom: 0.5rem;
+    background-color: var(--bg-card);
+    box-shadow: var(--shadow-sm);
 }
 
 .notice-item:hover {
-    background-color: var(--light-bg);
+    background-color: var(--bg-hover);
 }
 
 .notice-item:last-child {
@@ -1582,20 +1625,21 @@ a:hover {
 
 .notice-title {
     font-weight: 500;
-    color: var(--primary-color);
+    color: #333333;
     font-size: var(--body-size);
 }
 
 .notice-date {
     font-size: var(--small-size);
-    color: #666;
+    color: #666666;
+    font-style: italic;
 }
 
 .notice-reset-button {
     position: absolute;
     bottom: 1rem;
     right: 1rem;
-    background: var(--primary-color);
+    background: var(--primary-dark);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -1616,7 +1660,7 @@ a:hover {
 }
 
 .publication-year h4 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     font-size: 1.2rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
@@ -1638,7 +1682,7 @@ a:hover {
     content: "•";
     position: absolute;
     left: 0;
-    color: var(--primary-color);
+    color: var(--primary-dark);
 }
 
 .publication-title {
@@ -1647,14 +1691,14 @@ a:hover {
 }
 
 .publication-authors {
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.95rem;
     margin-bottom: 0.3rem;
 }
 
 .publication-venue {
     font-style: italic;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.95rem;
     margin-bottom: 0.3rem;
 }
@@ -1662,7 +1706,7 @@ a:hover {
 .publication-doi {
     display: inline-block;
     font-size: 0.9rem;
-    color: var(--primary-color);
+    color: var(--primary-dark);
     text-decoration: none;
 }
 
