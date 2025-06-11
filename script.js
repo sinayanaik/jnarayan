@@ -42,24 +42,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Add active state to nav items based on scroll position
-    window.addEventListener('scroll', () => {
-        let current = '';
-        const sections = document.querySelectorAll('section');
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (scrollY >= (sectionTop - sectionHeight / 3)) {
-                current = section.getAttribute('id');
-            }
-        });
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -80% 0px', // Adjust these values to change when sections become active
+        threshold: 0
+    };
 
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href').substring(1) === current) {
-                item.classList.add('active');
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Remove active class from all nav items
+                navItems.forEach(item => item.classList.remove('active'));
+                
+                // Add active class to corresponding nav item
+                const targetId = entry.target.id;
+                const correspondingNavItem = document.querySelector(`.nav-item[href="#${targetId}"]`);
+                if (correspondingNavItem) {
+                    correspondingNavItem.classList.add('active');
+                }
             }
         });
+    };
+
+    // Create and start the intersection observer
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('section, div[id]').forEach(section => {
+        observer.observe(section);
     });
 });
 
