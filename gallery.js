@@ -1,4 +1,4 @@
-// Gallery and Notice functionality
+// Gallery functionality
 let currentSlide = 0;
 let galleryImages = [];
 
@@ -74,7 +74,7 @@ function setupCarousel() {
     });
 
     // Auto-advance slides every 5 seconds
-    setInterval(() => {
+    let autoAdvance = setInterval(() => {
         if (!document.hidden) {
             currentSlide = (currentSlide + 1) % galleryImages.length;
             updateSlidePosition();
@@ -135,42 +135,7 @@ function updateSlidePosition() {
     });
 }
 
-// Notice board functionality
-async function fetchNotices() {
-    const { data, error } = await supabaseClient
-        .from('noticeboard')
-        .select('*')
-        .order('date', { ascending: false })
-        .limit(5);
-
-    if (error) {
-        console.error('Error fetching notices:', error);
-        return;
-    }
-
-    renderNotices(data);
-}
-
-function renderNotices(notices) {
-    const container = document.getElementById('notice-container');
-    
-    if (!notices || notices.length === 0) {
-        container.innerHTML = '<p class="has-text-centered">No notices available</p>';
-        return;
-    }
-
-    const html = notices.map(notice => `
-        <div class="notice-item">
-            <h4 class="notice-title">${notice.title}</h4>
-            <p class="notice-date">${new Date(notice.date).toLocaleDateString()}</p>
-        </div>
-    `).join('');
-
-    container.innerHTML = html;
-}
-
-// Initialize both gallery and notice board when the DOM is loaded
+// Initialize gallery when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     fetchGalleryImages();
-    fetchNotices();
 }); 

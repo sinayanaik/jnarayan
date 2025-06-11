@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr. Jyotindra Narayan</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <!-- Load Supabase first -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="config.js"></script>
     <!-- Load other scripts after Supabase is initialized -->
-    <script defer src="gallery-notice.js"></script>
+    <script defer src="gallery.js"></script>
+    <script defer src="notice.js"></script>
     <script defer src="publications.js"></script>
     <script defer src="teaching.js"></script>
     <script defer src="students.js"></script>
@@ -30,17 +32,18 @@
     <main>
         <section id="about" class="section">
             <div class="container">
+                <!-- Profile Section -->
                 <div class="profile-container">
                     <div class="profile-image-container">
                         <img src="images/profile.jpeg" alt="Profile Photo" id="profile-image">
                     </div>
                     <div class="profile-info">
-                        <h1 id="full-name">Dr. Jyotindra Narayan</h1>
+                        <h1 id="full-name" class="bold-name">Dr. Jyotindra Narayan</h1>
                         <h2 id="title">Assistant Professor</h2>
                         <p class="affiliation" id="current-position">Department of Mechanical Engineering</p>
                         <p class="institution" id="current-affiliation">Indian Institute of Technology Patna, Bihar, India</p>
                         <div class="profile-links">
-                            <a href="mailto:john.doe@university.edu" class="link-item" id="email-link">
+                            <a href="mailto:jnarayan@iitp.ac.in" class="link-item" id="email-link">
                                 <img src="https://img.icons8.com/ios-filled/50/000000/email.png" alt="Email">
                                 Email
                             </a>
@@ -57,18 +60,40 @@
                                 LinkedIn
                             </a>
                         </div>
+                        <p class="profile-bio" id="bio"></p>
                     </div>
                 </div>
 
-                <div class="columns mt-5">
+                <!-- Gallery and Notices Section -->
+                <div class="columns">
                     <div class="column is-8">
                         <div class="gallery-section">
                             <h3>Gallery</h3>
                             <div class="gallery-wrapper">
-                                <div id="gallery-container" class="gallery-container"></div>
+                                <div class="carousel">
+                                    <div class="carousel-container" id="gallery-container">
+                                        <!-- Images will be inserted here by JavaScript -->
+                                    </div>
+                                    <div class="carousel-navigation">
+                                        <button class="carousel-nav prev" aria-label="Previous slide">
+                                            <span class="icon">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </span>
+                                        </button>
+                                        <button class="carousel-nav next" aria-label="Next slide">
+                                            <span class="icon">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="carousel-indicators" id="gallery-indicators">
+                                        <!-- Indicators will be inserted here by JavaScript -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="column is-4">
                         <div class="noticeboard-section">
                             <h3>Latest Notices</h3>
@@ -79,11 +104,8 @@
                     </div>
                 </div>
 
-                <div class="bio-section mt-5">
-                    <p class="profile-bio" id="bio"></p>
-                </div>
-
-                <div class="research-areas mt-5">
+                <!-- Research Areas Section -->
+                <div class="research-areas">
                     <h3>Research Areas</h3>
                     <ul>
                         <li>Medical Robotics</li>
@@ -98,7 +120,145 @@
                     </ul>
                 </div>
 
-                <div class="publications-section mt-5">
+                <!-- Education Section -->
+                <div class="education-section">
+                    <h3>Education</h3>
+                    <div class="education-items">
+                        <div class="education-item">
+                            <h4>Ph.D. in Rehabilitation Robotics</h4>
+                            <p class="institution">Indian Institute of Technology Guwahati, India</p>
+                            <p class="duration">2017 - 2023</p>
+                        </div>
+
+                        <div class="education-item">
+                            <h4>M.E. in CAD/CAM Engineering</h4>
+                            <p class="institution">Thapar Institute of Engineering and Technology, India</p>
+                            <p class="duration">2015 - 2017</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Section -->
+                <div class="experience-section">
+                    <h3>Experience</h3>
+                    <div class="experience-grid">
+                        <div class="professional-experience">
+                            <h4>Professional Experience</h4>
+                            <div class="experience-items">
+                                <div class="experience-item">
+                                    <h4>Assistant Professor</h4>
+                                    <p class="institution">Indian Institute of Technology Patna, Bihar, India</p>
+                                    <p class="duration">December 2024 - Present</p>
+                                </div>
+
+                                <div class="experience-item">
+                                    <h4>Assistant Professor</h4>
+                                    <p class="institution">Thapar Institute of Engineering & Technology, Patiala, India</p>
+                                    <p class="duration">August 2024 - November 2024</p>
+                                </div>
+
+                                <div class="experience-item">
+                                    <h4>Postdoctoral Research Associate</h4>
+                                    <p class="institution">Imperial College London, United Kingdom</p>
+                                    <p class="duration">February 2023 - June 2024</p>
+                                </div>
+
+                                <div class="experience-item">
+                                    <h4>Postdoctoral Research Associate</h4>
+                                    <p class="institution">University of Bayreuth, Germany</p>
+                                    <p class="duration">February 2023 - June 2024</p>
+                                </div>
+
+                                <div class="experience-item">
+                                    <h4>Assistant System Engineer</h4>
+                                    <p class="institution">Tata Consultancy Services, Delhi, India</p>
+                                    <p class="duration">January 2015 - June 2015</p>
+                                </div>
+
+                                <div class="experience-item">
+                                    <h4>Research Trainee</h4>
+                                    <p class="institution">Spark Engineering Private Limited, NCR, India</p>
+                                    <p class="duration">August 2013 - May 2014</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="administrative-experience">
+                            <h4>Administrative Experience</h4>
+                            <div class="experience-items">
+                                <div class="experience-item">
+                                    <h4>Member of the Space Allocation Committee</h4>
+                                    <p class="institution">Department of Mechanical Engineering, IIT Patna</p>
+                                    <p class="duration">January 2025 - Present</p>
+                                </div>
+
+                                <div class="experience-item">
+                                    <h4>Member of the Industry/Research Outreach Committee</h4>
+                                    <p class="institution">Department of Mechanical Engineering at TIET, Patiala</p>
+                                    <p class="duration">September 2024 - November 2024</p>
+                                </div>
+
+                                <div class="experience-item">
+                                    <h4>Member of the Experiential Learning Centre Committee</h4>
+                                    <p class="institution">Department of Mechanical Engineering (Robotics and Artificial Intelligence Group) at TIET, Patiala</p>
+                                    <p class="duration">September 2024 - November 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teaching Section -->
+                <div class="teaching-section">
+                    <h3>Teaching</h3>
+                    <div id="teaching-list"></div>
+                </div>
+
+                <!-- Students Section -->
+                <div class="students-section">
+                    <h3>Students Advised</h3>
+                    
+                    <div class="present-students">
+                        <h4>Present Students</h4>
+                        
+                        <div class="student-category">
+                            <h5>Doctoral</h5>
+                            <div id="present-doctoral-list"></div>
+                        </div>
+                        
+                        <div class="student-category">
+                            <h5>Masters</h5>
+                            <div id="present-masters-list"></div>
+                        </div>
+                        
+                        <div class="student-category">
+                            <h5>Bachelors</h5>
+                            <div id="present-bachelors-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="past-students">
+                        <h4>Past Students</h4>
+                        
+                        <div class="student-category">
+                            <h5>Doctoral</h5>
+                            <div id="past-doctoral-list"></div>
+                        </div>
+                        
+                        <div class="student-category">
+                            <h5>Masters</h5>
+                            <div id="past-masters-list"></div>
+                        </div>
+                        
+                        <div class="student-category">
+                            <h5>Bachelors</h5>
+                            <div id="past-bachelors-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publications Section -->
+                <div class="publications-section">
                     <h3>Publications</h3>
                     <p class="publications-note">
                         For a comprehensive and up-to-date list, please refer to my 
@@ -127,263 +287,40 @@
                     </div>
                 </div>
 
-                <div class="education-section mt-5">
-                    <h3>Education</h3>
-                    <div class="education-items">
-                        <div class="education-item">
-                            <h4>Ph.D. in Rehabilitation Robotics</h4>
-                            <p class="institution">Indian Institute of Technology Guwahati, India</p>
-                            <p class="duration">2017 - 2023</p>
-                        </div>
-
-                        <div class="education-item">
-                            <h4>M.E. in CAD/CAM Engineering</h4>
-                            <p class="institution">Thapar Institute of Engineering and Technology, India</p>
-                            <p class="duration">2015 - 2017</p>
-                        </div>
-                    </div>
+                <!-- Talks Section -->
+                <div class="talks-section">
+                    <h3>Invited Talks</h3>
+                    <div id="talks-list"></div>
                 </div>
 
-                <div class="teaching-section">
-                    <h3>Teaching</h3>
-                    <div id="teaching-list"></div>
-                </div>
-
-                <div class="students-section">
-                    <h3>Students Advised</h3>
+                <!-- Awards Section -->
+                <div class="awards-section">
+                    <h3>Awards & Honours</h3>
                     
-                    <div class="present-students">
-                        <div class="research-areas">
-                            <h3>Research Areas</h3>
-                            <ul>
-                                <li>Medical Robotics</li>
-                                <li>Robust Control</li>
-                                <li>Data-Driven Control</li>
-                                <li>Human-Robot Interaction</li>
-                                <li>Rehabilitation Robotics</li>
-                                <li>Bioengineering</li>
-                                <li>Gait Analysis</li>
-                                <li>Generative AI for Time Series Forecasting</li>
-                                <li>Predictive Modeling for Neurodegenerative diseases</li>
-                            </ul>
-                        </div>
-
-                        <div class="education-section">
-                            <h3>Education</h3>
-                            <div class="education-items">
-                                <div class="education-item">
-                                    <h4>Ph.D. in Rehabilitation Robotics</h4>
-                                    <p class="institution">Indian Institute of Technology Guwahati, India</p>
-                                    <p class="duration">2017 - 2023</p>
-                                </div>
-
-                                <div class="education-item">
-                                    <h4>M.E. in CAD/CAM Engineering</h4>
-                                    <p class="institution">Thapar Institute of Engineering and Technology, India</p>
-                                    <p class="duration">2015 - 2017</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="teaching-section">
-                            <h3>Teaching</h3>
-                            <div id="teaching-list"></div>
-                        </div>
-
-                        <div class="students-section">
-                            <h3>Students Advised</h3>
-                            
-                            <div class="present-students">
-                                <h4>Present Students</h4>
-                                
-                                <div class="student-category">
-                                    <h5>Doctoral</h5>
-                                    <div id="present-doctoral-list"></div>
-                                </div>
-                                
-                                <div class="student-category">
-                                    <h5>Masters</h5>
-                                    <div id="present-masters-list"></div>
-                                </div>
-                                
-                                <div class="student-category">
-                                    <h5>Bachelors</h5>
-                                    <div id="present-bachelors-list"></div>
-                                </div>
-                            </div>
-
-                            <div class="past-students">
-                                <h4>Past Students</h4>
-                                
-                                <div class="student-category">
-                                    <h5>Doctoral</h5>
-                                    <div id="past-doctoral-list"></div>
-                                </div>
-                                
-                                <div class="student-category">
-                                    <h5>Masters</h5>
-                                    <div id="past-masters-list"></div>
-                                </div>
-                                
-                                <div class="student-category">
-                                    <h5>Bachelors</h5>
-                                    <div id="past-bachelors-list"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="talks-section">
-                            <h3>Invited Talks</h3>
-                            <div id="talks-list"></div>
-                        </div>
-
-                        <div class="awards-section">
-                            <h3>Awards & Honours</h3>
-                            
-                            <div class="awards-category">
-                                <h4>Awards/Honours</h4>
-                                <div id="awards-list"></div>
-                            </div>
-
-                            <div class="awards-category">
-                                <h4>Editorial Roles</h4>
-                                <div id="editorial-list"></div>
-                            </div>
-
-                            <div class="awards-category">
-                                <h4>Reviewer Roles</h4>
-                                <div id="reviewer-list"></div>
-                            </div>
-
-                            <div class="awards-category">
-                                <h4>Technical Programme Committee Roles</h4>
-                                <div id="technical-list"></div>
-                            </div>
-
-                            <div class="awards-category">
-                                <h4>Advisory Committee Roles</h4>
-                                <div id="advisory-list"></div>
-                            </div>
-                        </div>
-
-                        <div class="publications-section">
-                            <h3>Publications</h3>
-                            <p class="publications-note">
-                                For a comprehensive and up-to-date list, please refer to my 
-                                <a href="#" class="scholar-link">Google Scholar profile</a> or 
-                                <a href="#" class="cv-link">Curriculum Vitae</a>.
-                            </p>
-
-                            <div class="journal-articles">
-                                <h4>Journal Articles</h4>
-                                <div id="journal-articles-list"></div>
-                            </div>
-
-                            <div class="conference-articles">
-                                <h4>Conference Articles</h4>
-                                <div id="conference-articles-list"></div>
-                            </div>
-
-                            <div class="book-chapters">
-                                <h4>Book Chapters</h4>
-                                <div id="book-chapters-list"></div>
-                            </div>
-
-                            <div class="patents">
-                                <h4>Patents</h4>
-                                <div id="patents-list"></div>
-                            </div>
-                        </div>
-
-                        <div class="experience-section">
-                            <div class="professional-experience">
-                                <h3>Professional Experience</h3>
-                                <div class="experience-items">
-                                    <div class="experience-item">
-                                        <h4>Assistant Professor</h4>
-                                        <p class="institution">Indian Institute of Technology Patna, Bihar, India</p>
-                                        <p class="duration">December 2024 - Present</p>
-                                    </div>
-
-                                    <div class="experience-item">
-                                        <h4>Assistant Professor</h4>
-                                        <p class="institution">Thapar Institute of Engineering & Technology, Patiala, India</p>
-                                        <p class="duration">August 2024 - November 2024</p>
-                                    </div>
-
-                                    <div class="experience-item">
-                                        <h4>Postdoctoral Research Associate</h4>
-                                        <p class="institution">Imperial College London, United Kingdom</p>
-                                        <p class="duration">February 2023 - June 2024</p>
-                                    </div>
-
-                                    <div class="experience-item">
-                                        <h4>Postdoctoral Research Associate</h4>
-                                        <p class="institution">University of Bayreuth, Germany</p>
-                                        <p class="duration">February 2023 - June 2024</p>
-                                    </div>
-
-                                    <div class="experience-item">
-                                        <h4>Assistant System Engineer</h4>
-                                        <p class="institution">Tata Consultancy Services, Delhi, India</p>
-                                        <p class="duration">January 2015 - June 2015</p>
-                                    </div>
-
-                                    <div class="experience-item">
-                                        <h4>Research Trainee</h4>
-                                        <p class="institution">Spark Engineering Private Limited, NCR, India</p>
-                                        <p class="duration">August 2013 - May 2014</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="administrative-experience">
-                                <h3>Administrative Experience</h3>
-                                <div class="experience-items">
-                                    <div class="experience-item">
-                                        <h4>Member of the Space Allocation Committee</h4>
-                                        <p class="institution">Department of Mechanical Engineering, IIT Patna</p>
-                                        <p class="duration">January 2025 - Present</p>
-                                    </div>
-
-                                    <div class="experience-item">
-                                        <h4>Member of the Industry/Research Outreach Committee</h4>
-                                        <p class="institution">Department of Mechanical Engineering at TIET, Patiala</p>
-                                        <p class="duration">September 2024 - November 2024</p>
-                                    </div>
-
-                                    <div class="experience-item">
-                                        <h4>Member of the Experiential Learning Centre Committee</h4>
-                                        <p class="institution">Department of Mechanical Engineering (Robotics and Artificial Intelligence Group) at TIET, Patiala</p>
-                                        <p class="duration">September 2024 - November 2024</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="awards-category">
+                        <h4>Awards/Honours</h4>
+                        <div id="awards-list"></div>
                     </div>
-                </div>
 
-                <div class="columns mt-5">
-                    <div class="column is-8">
-                        <div class="gallery-section">
-                            <h3>Gallery</h3>
-                            <div class="gallery-wrapper">
-                                <div id="gallery-container" class="gallery-container"></div>
-                            </div>
-                        </div>
+                    <div class="awards-category">
+                        <h4>Editorial Roles</h4>
+                        <div id="editorial-list"></div>
                     </div>
-                    <div class="column is-4">
-                        <div class="noticeboard-section">
-                            <h3>Latest Notices</h3>
-                            <div class="notice-wrapper">
-                                <div id="notice-container" class="notice-container"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="bio-section mt-5">
-                    <p class="profile-bio" id="bio"></p>
+                    <div class="awards-category">
+                        <h4>Reviewer Roles</h4>
+                        <div id="reviewer-list"></div>
+                    </div>
+
+                    <div class="awards-category">
+                        <h4>Technical Programme Committee Roles</h4>
+                        <div id="technical-list"></div>
+                    </div>
+
+                    <div class="awards-category">
+                        <h4>Advisory Committee Roles</h4>
+                        <div id="advisory-list"></div>
+                    </div>
                 </div>
             </div>
         </section>
