@@ -1,15 +1,10 @@
-// Initialize Supabase client
-const supabaseUrl = 'https://vcxwzwfpxflxgcpjmpfh.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeHd6d2ZweGZseGdjcGptcGZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5NzM4NzgsImV4cCI6MjAyNTU0OTg3OH0.N0BKAK1FQjkWHK4_L9SLXLGAYmvvEMQAPQhYThVxvxE';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
 // Update footer year
 document.getElementById('current-year').textContent = new Date().getFullYear();
 
 // Fetch and display profile data
 async function loadProfileData() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await window.supabaseClient
             .from('profile')
             .select('*')
             .single();
