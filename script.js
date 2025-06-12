@@ -4,42 +4,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.querySelector('.nav-menu');
     const navItems = document.querySelectorAll('.nav-item');
 
-    // Toggle hamburger menu
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('is-active');
-        navMenu.classList.toggle('is-active');
-    });
+    // Toggle menu
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    }
 
     // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-            hamburger.classList.remove('is-active');
-            navMenu.classList.remove('is-active');
+    function closeMenu(e) {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
         }
-    });
+    }
 
-    // Handle navigation item clicks
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Close the mobile menu if it's open
-            hamburger.classList.remove('is-active');
-            navMenu.classList.remove('is-active');
+    // Close menu when clicking nav items
+    function closeMenuOnClick() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
 
-            // Get the target section
-            const targetId = item.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
+    // Event listeners
+    hamburger.addEventListener('click', toggleMenu);
+    document.addEventListener('click', closeMenu);
+    navItems.forEach(item => item.addEventListener('click', closeMenuOnClick));
 
-            if (targetSection) {
-                // Smooth scroll to target section
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
+    // Prevent body scroll when menu is open
+    function toggleBodyScroll() {
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    }
+
+    hamburger.addEventListener('click', toggleBodyScroll);
+    navItems.forEach(item => item.addEventListener('click', () => {
+        document.body.style.overflow = '';
+    }));
 
     // Add active state to nav items based on scroll position
     const observerOptions = {

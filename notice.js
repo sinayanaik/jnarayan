@@ -8,12 +8,12 @@ async function fetchNotices() {
         }
 
         const { data, error } = await window.supabaseClient
-            .from('noticeboard')
+        .from('noticeboard')
             .select('title, date')
-            .order('date', { ascending: false });
+        .order('date', { ascending: false });
 
-        if (error) {
-            console.error('Error fetching notices:', error);
+    if (error) {
+        console.error('Error fetching notices:', error);
             const container = document.getElementById('notice-container');
             if (container) {
                 container.innerHTML = '<p class="has-text-centered">Error loading notices</p>';
@@ -26,11 +26,11 @@ async function fetchNotices() {
             if (container) {
                 container.innerHTML = '<p class="has-text-centered">No notices available</p>';
             }
-            return;
-        }
+        return;
+    }
 
-        notices = data;
-        renderNotices();
+    notices = data;
+    renderNotices();
     } catch (error) {
         console.error('Error in fetchNotices:', error);
         const container = document.getElementById('notice-container');
@@ -104,24 +104,24 @@ function renderNotices() {
                 transform: translateY(-50%);
             }
         }
-        
+
         .notice-item {
             padding: 10px 15px;
             border-left: 4px solid #3273dc;
             margin: 8px 0;
             background: white;
             transition: background-color 0.3s ease;
-        }
+            }
         
         .notice-item:hover {
             background: #f5f5f5;
         }
-        
+
         .notice-title {
             font-weight: 500;
             margin-bottom: 5px;
-        }
-        
+    }
+
         .notice-date {
             font-size: 0.9em;
             color: #666;
@@ -143,6 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        fetchNotices();
+    fetchNotices();
     }, 100);
 }); 

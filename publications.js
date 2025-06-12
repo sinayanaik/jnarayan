@@ -57,7 +57,7 @@ async function fetchJournalArticles() {
             .from('journal_articles')
             .select('*')
             .order('year', { ascending: false });
-
+        
         if (error) throw error;
         return data || [];
     } catch (error) {
@@ -77,7 +77,7 @@ async function fetchConferenceArticles() {
             .from('conference_articles')
             .select('*')
             .order('year', { ascending: false });
-
+        
         if (error) throw error;
         return data || [];
     } catch (error) {
@@ -97,7 +97,7 @@ async function fetchBookChapters() {
             .from('book_chapters')
             .select('*')
             .order('year', { ascending: false });
-
+        
         if (error) throw error;
         return data || [];
     } catch (error) {
@@ -117,7 +117,7 @@ async function fetchPatents() {
             .from('patents')
             .select('*')
             .order('year', { ascending: false });
-
+        
         if (error) throw error;
         return data || [];
     } catch (error) {
@@ -198,11 +198,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         try {
             const [journalArticles, conferenceArticles, bookChapters, patents] = await Promise.all([
-                fetchJournalArticles(),
-                fetchConferenceArticles(),
-                fetchBookChapters(),
-                fetchPatents()
-            ]);
+        fetchJournalArticles(),
+        fetchConferenceArticles(),
+        fetchBookChapters(),
+        fetchPatents()
+    ]);
 
             // Render the publications
             renderPublications(journalArticles, conferenceArticles, bookChapters, patents);

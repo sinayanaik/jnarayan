@@ -46,42 +46,33 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Clear existing content
         container.innerHTML = '';
 
-        // Create indicators container
-        const indicatorsContainer = document.createElement('div');
-        indicatorsContainer.className = 'carousel-indicators';
-        
-        // Create indicators
-        galleryData.forEach((_, index) => {
-            const indicator = document.createElement('button');
-            indicator.className = `carousel-indicator${index === 0 ? ' active' : ''}`;
-            indicator.setAttribute('aria-label', `Slide ${index + 1}`);
-            indicator.addEventListener('click', () => goToSlide(index));
-            indicatorsContainer.appendChild(indicator);
-        });
-
         // Create slides
         galleryData.forEach((item, index) => {
             const slide = document.createElement('div');
-            slide.className = 'carousel-slide';
+            slide.className = `carousel-slide${index === 0 ? ' active' : ''}`;
             
             const imageContainer = document.createElement('div');
             imageContainer.className = 'carousel-image-container';
             
-            // Add image
-            imageContainer.innerHTML = `<img src="${item.image_url}" alt="Gallery image ${index + 1}" class="carousel-image">`;
+            // Create and setup image
+            const img = document.createElement('img');
+            img.className = 'carousel-image';
+            img.src = item.image_url;
+            img.alt = `Gallery image ${index + 1}`;
             
-            // Clone and append indicators to each image container
-            const slideIndicators = indicatorsContainer.cloneNode(true);
-            slideIndicators.querySelectorAll('.carousel-indicator').forEach((indicator, i) => {
-                indicator.addEventListener('click', () => goToSlide(i));
-            });
-            imageContainer.appendChild(slideIndicators);
+            // Add loading state
+            img.style.opacity = '0';
+            img.onload = () => {
+                img.style.opacity = '1';
+            };
             
             // Add caption
             const caption = document.createElement('div');
             caption.className = 'carousel-caption';
             caption.textContent = item.caption || '';
             
+            // Append elements
+            imageContainer.appendChild(img);
             slide.appendChild(imageContainer);
             slide.appendChild(caption);
             container.appendChild(slide);
@@ -93,20 +84,18 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         let currentSlide = 0;
         const totalSlides = galleryData.length;
+        const slides = container.querySelectorAll('.carousel-slide');
 
         function updateSlidePosition() {
-            container.style.transform = `translateX(-${currentSlide * 100}%)`;
-            // Update indicators for all slides
-            document.querySelectorAll('.carousel-slide').forEach((slide) => {
-                slide.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
-                    indicator.classList.toggle('active', index === currentSlide);
-                });
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    slide.style.transform = 'translateX(0)';
+                } else {
+                    slide.classList.remove('active');
+                    slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+                }
             });
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            updateSlidePosition();
         }
 
         function nextSlide() {
@@ -123,14 +112,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (prevButton) prevButton.addEventListener('click', prevSlide);
         if (nextButton) nextButton.addEventListener('click', nextSlide);
 
-        // Optional: Auto-advance slides
-        let autoAdvance = setInterval(nextSlide, 5000);
+        // Optional: Auto-advance slides (changed from 5000ms to 3000ms)
+        let autoAdvance = setInterval(nextSlide, 3000);
 
         // Pause auto-advance on hover
         container.parentElement.addEventListener('mouseenter', () => clearInterval(autoAdvance));
         container.parentElement.addEventListener('mouseleave', () => {
             clearInterval(autoAdvance);
-            autoAdvance = setInterval(nextSlide, 5000);
+            autoAdvance = setInterval(nextSlide, 3000);
         });
 
         // Initial position
