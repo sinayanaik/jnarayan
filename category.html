@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Category - Publications</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Load Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Initialize Supabase client immediately
+        const SUPABASE_URL = 'https://ktiiyeuvsvbqnrhqbwmr.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWl5ZXV2c3ZicW5yaHFid21yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1NjI1OTIsImV4cCI6MjA2NTEzODU5Mn0.yPZY4oo70R4UXl4grSLyLRfNLJzFg1EYMeoKjpZy6tA';
+        window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    </script>
+    <script src="category.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-branding">Back to Home</a>
+    </nav>
+
+    <main>
+        <section id="category-publications">
+            <h1 id="category-title"></h1>
+            
+            <div class="publications-container">
+                <div class="publication-section">
+                    <h2>Journal Articles</h2>
+                    <div id="journal-articles-container"></div>
+                </div>
+
+                <div class="publication-section">
+                    <h2>Conference Articles</h2>
+                    <div id="conference-articles-container"></div>
+                </div>
+
+                <div class="publication-section">
+                    <h2>Book Chapters</h2>
+                    <div id="book-chapters-container"></div>
+                </div>
+
+                <div class="publication-section">
+                    <h2>Patents</h2>
+                    <div id="patents-container"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> All rights reserved.</p>
+    </footer>
+</body>
+</html> 
