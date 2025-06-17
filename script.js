@@ -69,63 +69,63 @@ document.addEventListener('DOMContentLoaded', function() {
     if (footerYear) {
         footerYear.textContent = new Date().getFullYear();
     }
-});
 
-// Smooth scroll to sections with intersection observer
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            updateActiveNavItem(id);
-        }
+    // Smooth scroll to sections with intersection observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                updateActiveNavItem(id, $navbarItems);
+            }
+        });
+    }, {
+        rootMargin: '-20% 0px -80% 0px'
     });
-}, {
-    rootMargin: '-20% 0px -80% 0px'
-});
 
-// Observe all sections
-document.querySelectorAll('section[id]').forEach(section => {
-    observer.observe(section);
-});
+    // Observe all sections
+    document.querySelectorAll('section[id]').forEach(section => {
+        observer.observe(section);
+    });
 
-// Update active navigation item
-function updateActiveNavItem(sectionId) {
-    if (!sectionId) return;
-    
-    $navbarItems.forEach(item => {
-        if (!item) return;
+    // Update active navigation item
+    function updateActiveNavItem(sectionId, navItems) {
+        if (!sectionId || !navItems) return;
         
-        // Remove active class from all items
-        item.classList.remove('is-active');
-        
-        // Add active class to current section's nav item
-        const href = item.getAttribute('href');
-        if (href === `#${sectionId}`) {
-            item.classList.add('is-active');
-        }
-    });
-}
+        navItems.forEach(item => {
+            if (!item) return;
+            
+            // Remove active class from all items
+            item.classList.remove('is-active');
+            
+            // Add active class to current section's nav item
+            const href = item.getAttribute('href');
+            if (href === `#${sectionId}`) {
+                item.classList.add('is-active');
+            }
+        });
+    }
 
-// Set initial active state based on scroll position
-function setInitialActiveState() {
-    const scrollPosition = window.scrollY;
-    const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 0;
+    // Set initial active state based on scroll position
+    function setInitialActiveState() {
+        const scrollPosition = window.scrollY;
+        const navbarHeight = $header?.offsetHeight || 0;
 
-    // Find the current section
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - navbarHeight - 10;
-        const sectionBottom = sectionTop + section.offsetHeight;
+        // Find the current section
+        const sections = document.querySelectorAll('section[id]');
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - navbarHeight - 10;
+            const sectionBottom = sectionTop + section.offsetHeight;
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-            updateActiveNavItem(section.id);
-        }
-    });
-}
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                updateActiveNavItem(section.id, $navbarItems);
+            }
+        });
+    }
 
-// Initialize
-setInitialActiveState();
-window.addEventListener('scroll', setInitialActiveState);
+    // Initialize
+    setInitialActiveState();
+    window.addEventListener('scroll', setInitialActiveState);
+});
 
 // Expose initialization function for other scripts
 window.initializeNavigation = function() {

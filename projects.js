@@ -1,53 +1,64 @@
-// Gallery functionality
+// Projects functionality
 document.addEventListener('DOMContentLoaded', async function() {
-    async function fetchGalleryItems() {
+    async function fetchProjects() {
         try {
+            console.log('Initializing projects fetch...');
             if (!window.supabaseClient) {
                 throw new Error('Supabase client not initialized');
             }
 
+            console.log('Fetching projects from Supabase...');
             const { data, error } = await window.supabaseClient
-                .from('gallery')
+                .from('projects')
                 .select('*')
-                .order('created_at', { ascending: false });
+                .order('date', { ascending: false });
+
+            console.log('Projects data:', data);
+            console.log('Projects error:', error);
 
             if (error) {
-                console.error('Error fetching gallery items:', error);
-                const container = document.getElementById('gallery-container');
+                console.error('Error fetching projects:', error);
+                const container = document.getElementById('projects-container');
                 if (container) {
-                    container.innerHTML = '<p class="has-text-centered">Error loading gallery images</p>';
+                    container.innerHTML = '<p class="has-text-centered">Error loading projects</p>';
                 }
                 return null;
             }
 
             if (!data || data.length === 0) {
-                const container = document.getElementById('gallery-container');
+                console.log('No projects found');
+                const container = document.getElementById('projects-container');
                 if (container) {
-                    container.innerHTML = '<p class="has-text-centered">No images available</p>';
+                    container.innerHTML = '<p class="has-text-centered">No projects available</p>';
                 }
                 return null;
             }
 
             return data;
         } catch (error) {
-            console.error('Error in fetchGalleryItems:', error);
-            const container = document.getElementById('gallery-container');
+            console.error('Error in fetchProjects:', error);
+            const container = document.getElementById('projects-container');
             if (container) {
-                container.innerHTML = '<p class="has-text-centered">Error loading gallery images</p>';
+                container.innerHTML = '<p class="has-text-centered">Error loading projects</p>';
             }
             return null;
         }
     }
 
-    function initGallery(galleryData) {
-        const container = document.getElementById('gallery-container');
-        if (!container || !galleryData) return;
+    function initProjects(projectsData) {
+        console.log('Initializing projects with data:', projectsData);
+        const container = document.getElementById('projects-container');
+        if (!container || !projectsData) {
+            console.log('Container or project data missing:', { container: !!container, projectsData: !!projectsData });
+            return;
+        }
 
         // Clear existing content
         container.innerHTML = '';
 
         // Create slides
-        galleryData.forEach((item, index) => {
+        projectsData.forEach((project, index) => {
+            console.log('Creating slide for project:', project);
             const slide = document.createElement('div');
             slide.className = `carousel-slide${index === 0 ? ' active' : ''}`;
             
@@ -57,24 +68,29 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Create and setup image
             const img = document.createElement('img');
             img.className = 'carousel-image';
-            img.src = item.image_url;
-            img.alt = `Gallery image ${index + 1}`;
+            img.src = project.image_url;
+            img.alt = `Project image ${index + 1}`;
             
             // Add loading state
             img.style.opacity = '0';
             img.onload = () => {
+                console.log('Image loaded:', project.image_url);
                 img.style.opacity = '1';
             };
+            img.onerror = () => {
+                console.error('Error loading image:', project.image_url);
+                img.src = 'placeholder.jpg'; // You might want to add a placeholder image
+            };
             
-            // Add caption
+            // Add caption and date
             const caption = document.createElement('div');
             caption.className = 'carousel-caption';
-            const date = new Date(item.created_at).toLocaleDateString('en-US', {
+            const date = new Date(project.date).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long'
             });
             caption.innerHTML = `
-                <h4 class="project-title">${item.caption || ''}</h4>
+                <h4 class="project-title">${project.title}</h4>
                 <p class="project-date">${date}</p>
             `;
             
@@ -86,11 +102,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
 
         // Set up navigation
-        const prevButton = document.querySelector('.gallery-section .carousel-nav.prev');
-        const nextButton = document.querySelector('.gallery-section .carousel-nav.next');
+        const prevButton = document.querySelector('.ongoing-projects-section .carousel-nav.prev');
+        const nextButton = document.querySelector('.ongoing-projects-section .carousel-nav.next');
+        
+        console.log('Navigation buttons:', { prev: !!prevButton, next: !!nextButton });
 
         let currentSlide = 0;
-        const totalSlides = galleryData.length;
+        const totalSlides = projectsData.length;
         const slides = container.querySelectorAll('.carousel-slide');
 
         function updateSlidePosition() {
@@ -159,11 +177,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Initial position
         updateSlidePosition();
+        console.log('Projects carousel initialized successfully');
     }
 
-    // Initialize gallery with data from Supabase
-    const galleryData = await fetchGalleryItems();
-    if (galleryData) {
-        initGallery(galleryData);
+    // Initialize projects with data from Supabase
+    console.log('Starting projects initialization...');
+    const projectsData = await fetchProjects();
+    if (projectsData) {
+        initProjects(projectsData);
     }
 }); 
