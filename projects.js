@@ -82,16 +82,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 img.src = 'placeholder.jpg'; // You might want to add a placeholder image
             };
             
-            // Add caption and date
+            // Add caption
             const caption = document.createElement('div');
             caption.className = 'carousel-caption';
-            const date = new Date(project.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long'
-            });
             caption.innerHTML = `
                 <h4 class="project-title">${project.title}</h4>
-                <p class="project-date">${date}</p>
             `;
             
             // Append elements

@@ -20,8 +20,7 @@ function renderAwards(awards, type) {
             <div class="award-item">
                 <span class="bullet">•</span>
                 <div class="award-content">
-                    <span>${award.title}</span>
-                    <span class="award-year">, ${award.year}</span>
+                    <span class="award-title">${award.title}</span>
                 </div>
             </div>
         `;

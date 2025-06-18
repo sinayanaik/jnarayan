@@ -1,96 +1,117 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // Get category from URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const category = urlParams.get('category');
-        
-        if (!category) {
-            console.error('No category specified');
-            window.location.href = 'index.html';
-            return;
-        }
+// Category page functionality
+document.addEventListener('DOMContentLoaded', async function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
 
-        console.log('Loading category:', category);
+    if (!category) {
+        window.location.href = 'index.html';
+        return;
+    }
 
-        // Set page title
-        document.title = `${category} - Publications`;
-        document.getElementById('category-title').textContent = category;
+    // Update page title
+    document.getElementById('category-title').textContent = category;
 
-        // Function to create publication element
-        function createPublicationElement(publication) {
-            console.log('Creating element for publication:', publication);
-            const div = document.createElement('div');
-            div.className = 'publication-item';
+    async function fetchCategoryPublications() {
+        try {
+            if (!window.supabaseClient) {
+                throw new Error('Supabase client not initialized');
+            }
+
+            const tables = [
+                { name: 'journal_articles', title: 'Journal Articles' },
+                { name: 'conference_articles', title: 'Conference Articles' },
+                { name: 'book_chapters', title: 'Book Chapters' },
+                { name: 'patents', title: 'Patents' }
+            ];
+
+            const publications = {};
             
-            const title = publication.url 
-                ? `<a href="${publication.url}" target="_blank" rel="noopener noreferrer">${publication.title}</a>`
-                : publication.title;
-
-            div.innerHTML = `
-                <p class="publication-title">${title}</p>
-                <p class="publication-year">${publication.year}</p>
-            `;
-            return div;
-        }
-
-        // Function to fetch and display publications for a specific table
-        async function fetchAndDisplayPublications(tableName, containerId) {
-            console.log(`Fetching ${tableName} for category:`, category);
-            const container = document.getElementById(containerId);
-            
-            try {
-                if (!window.supabaseClient) {
-                    throw new Error('Supabase client not initialized');
-                }
-
-                const { data, error } = await window.supabaseClient
-                    .from(tableName)
+            // Fetch from all tables
+            const promises = tables.map(table => 
+                window.supabaseClient
+                    .from(table.name)
                     .select('*')
                     .eq('category', category)
-                    .order('year', { ascending: false });
+                    .order('year', { ascending: false })
+            );
 
-                console.log(`${tableName} data:`, data);
-                console.log(`${tableName} error:`, error);
+            const results = await Promise.all(promises);
 
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p class="no-publications">No publications in this category.</p>';
+            // Process results
+            results.forEach((result, index) => {
+                if (result.error) {
+                    console.error(`Error fetching ${tables[index].name}:`, result.error);
                     return;
                 }
+                publications[tables[index].name] = {
+                    title: tables[index].title,
+                    items: result.data
+                };
+            });
 
-                // Clear any existing content
-                container.innerHTML = '';
-                
-                // Add each publication
-                data.forEach(publication => {
-                    container.appendChild(createPublicationElement(publication));
-                });
-            } catch (error) {
-                console.error(`Error fetching ${tableName}:`, error);
-                container.innerHTML = 
-                    `<p class="error-message">Error loading publications. Please try again later.</p>`;
+            return publications;
+        } catch (error) {
+            console.error('Error fetching category publications:', error);
+            return null;
+        }
+    }
+
+    function renderPublications(publications) {
+        const container = document.getElementById('category-publications');
+        if (!container) return;
+
+        let html = '';
+        
+        // Render each publication type
+        Object.values(publications).forEach(pubType => {
+            if (pubType.items.length > 0) {
+                html += `
+                    <div class="publication-section">
+                        <h3>${pubType.title}</h3>
+                        <div class="publication-list">
+                `;
+
+                // Group by year
+                const byYear = pubType.items.reduce((acc, pub) => {
+                    acc[pub.year] = acc[pub.year] || [];
+                    acc[pub.year].push(pub);
+                    return acc;
+                }, {});
+
+                // Render publications by year
+                Object.entries(byYear)
+                    .sort(([a], [b]) => b - a) // Sort years descending
+                    .forEach(([year, items]) => {
+                        html += `<div class="publication-year">${year}</div>`;
+                        items.forEach(pub => {
+                            html += `
+                                <div class="publication-item">
+                                    <div class="publication-title">${pub.title}</div>
+                                    ${pub.url ? `
+                                        <div class="publication-links">
+                                            <a href="${pub.url}" target="_blank" rel="noopener noreferrer">
+                                                <i class="fas fa-external-link-alt"></i> View Publication
+                                            </a>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `;
+                        });
+                    });
+
+                html += `
+                        </div>
+                    </div>
+                `;
             }
-        }
-
-        // Fetch publications for all types
-        const tables = [
-            ['journal_articles', 'journal-articles-container'],
-            ['conference_articles', 'conference-articles-container'],
-            ['book_chapters', 'book-chapters-container'],
-            ['patents', 'patents-container']
-        ];
-
-        for (const [table, containerId] of tables) {
-            await fetchAndDisplayPublications(table, containerId);
-        }
-
-        // Update footer year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    } catch (error) {
-        console.error('Failed to initialize:', error);
-        document.querySelectorAll('.publication-section div[id]').forEach(container => {
-            container.innerHTML = '<p class="error-message">Failed to connect to the database. Please try again later.</p>';
         });
+
+        container.innerHTML = html || '<p class="no-publications">No publications found in this category.</p>';
+    }
+
+    // Initialize category page
+    const publications = await fetchCategoryPublications();
+    if (publications) {
+        renderPublications(publications);
     }
 }); 

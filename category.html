@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Category - Publications</title>
+    <title>Research Category - Dr. Jyotindra Narayan</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Load Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -16,40 +17,53 @@
     <script src="category.js"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="index.html" class="nav-branding">Back to Home</a>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="index.html">
+                <span class="name">Dr. Jyotindra Narayan</span>
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a href="index.html#about" class="navbar-item">About</a>
+                <a href="index.html#research" class="navbar-item">Research</a>
+                <a href="index.html#experience" class="navbar-item">Experience</a>
+                <a href="index.html#education" class="navbar-item">Education</a>
+                <a href="index.html#teaching" class="navbar-item">Teaching</a>
+                <a href="index.html#publications" class="navbar-item">Publications</a>
+                <a href="index.html#awards" class="navbar-item">Awards</a>
+                <a href="index.html#students" class="navbar-item">Students</a>
+                <a href="index.html#collaborators" class="navbar-item">Collaborators</a>
+                <a href="index.html#gallery" class="navbar-item">Gallery</a>
+            </div>
+        </div>
     </nav>
 
     <main>
-        <section id="category-publications">
-            <h1 id="category-title"></h1>
-            
-            <div class="publications-container">
-                <div class="publication-section">
-                    <h2>Journal Articles</h2>
-                    <div id="journal-articles-container"></div>
-                </div>
-
-                <div class="publication-section">
-                    <h2>Conference Articles</h2>
-                    <div id="conference-articles-container"></div>
-                </div>
-
-                <div class="publication-section">
-                    <h2>Book Chapters</h2>
-                    <div id="book-chapters-container"></div>
-                </div>
-
-                <div class="publication-section">
-                    <h2>Patents</h2>
-                    <div id="patents-container"></div>
-                </div>
+        <div class="container">
+            <div class="category-header">
+                <h2 id="category-title"></h2>
             </div>
-        </section>
+
+            <div id="category-publications"></div>
+        </div>
     </main>
 
     <footer>
-        <p>&copy; <span id="current-year"></span> All rights reserved.</p>
+        <div class="container">
+            <p>&copy; <span id="current-year">2024</span> All Rights Reserved</p>
+        </div>
     </footer>
+
+    <!-- Load Scripts -->
+    <script src="script.js"></script>
+    <script src="category.js"></script>
 </body>
 </html> 

@@ -125,9 +125,106 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     setInitialActiveState();
     window.addEventListener('scroll', setInitialActiveState);
+
+    // Mouse move effect for research category cards
+    const cards = document.querySelectorAll('.category-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+            const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+            
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        });
+    });
 });
 
 // Expose initialization function for other scripts
 window.initializeNavigation = function() {
     setInitialActiveState();
-}; 
+};
+
+// Function to format date
+function formatDate(dateStr) {
+    if (!dateStr) return 'Present';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long'
+    });
+}
+
+// Function to create experience item HTML
+function createExperienceItem(experience) {
+    return `
+        <div class="experience-item">
+            <h4>${experience.title}</h4>
+            <p class="institution">${experience.institution}</p>
+            <p class="duration">${formatDate(experience.start_date)} - ${formatDate(experience.end_date)}</p>
+            ${experience.description ? `<p class="description">${experience.description}</p>` : ''}
+        </div>
+    `;
+}
+
+// Function to fetch and display experiences
+async function loadExperiences() {
+    try {
+        if (!window.supabaseClient) {
+            throw new Error('Supabase client not initialized');
+        }
+
+        const { data: experiences, error } = await window.supabaseClient
+            .from('experiences')
+            .select('*')
+            .order('order_index', { ascending: true });
+
+        if (error) throw error;
+
+        // Group experiences by type
+        const groupedExperiences = experiences.reduce((acc, exp) => {
+            if (!acc[exp.type]) {
+                acc[exp.type] = [];
+            }
+            acc[exp.type].push(exp);
+            return acc;
+        }, {});
+
+        // Render professional experience
+        const professionalContainer = document.getElementById('professional-experience');
+        if (professionalContainer && groupedExperiences.professional) {
+            professionalContainer.innerHTML = `
+                <h4>Professional Experience</h4>
+                <div class="experience-items">
+                    ${groupedExperiences.professional.map(exp => createExperienceItem(exp)).join('')}
+                </div>
+            `;
+        }
+
+        // Render administrative experience
+        const adminContainer = document.getElementById('administrative-experience');
+        if (adminContainer && groupedExperiences.administrative) {
+            adminContainer.innerHTML = `
+                <h4>Administrative Experience</h4>
+                <div class="experience-items">
+                    ${groupedExperiences.administrative.map(exp => createExperienceItem(exp)).join('')}
+                </div>
+            `;
+        }
+
+    } catch (error) {
+        console.error('Error loading experiences:', error);
+        const container = document.querySelector('.experience-grid');
+        if (container) {
+            container.innerHTML = `
+                <div class="notification is-danger is-light">
+                    <p class="has-text-centered">Error loading experiences. Please try again later.</p>
+                </div>
+            `;
+        }
+    }
+}
+
+// Initialize experiences when DOM is loaded
+document.addEventListener('DOMContentLoaded', loadExperiences); 

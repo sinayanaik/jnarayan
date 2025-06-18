@@ -67,39 +67,38 @@ function renderCollaborators(collaborators) {
         const groupedCollaborators = groupCollaboratorsByAffiliation(collaborators);
         
         const html = Object.values(groupedCollaborators).map(group => `
-            <div class="institution-group">
-                <h4 class="institution-name">
-                    <span class="icon-text">
+            <div class="collaborator-institution">
+                <div class="institution-header">
+                    <h4 class="institution-name">
                         <span class="icon">
                             <i class="fas fa-university"></i>
                         </span>
                         <span>${group.affiliation}</span>
-                    </span>
-                    <span class="country">
+                    </h4>
+                    <div class="institution-location">
                         <span class="icon">
                             <i class="fas fa-globe"></i>
                         </span>
                         <span>${group.country}</span>
-                    </span>
-                </h4>
-                <div class="collaborators-grid">
+                    </div>
+                </div>
+                <div class="collaborator-list">
                     ${group.members.map(member => `
-                        <div class="collaborator-card">
-                            <div class="collaborator-info">
+                        <div class="collaborator-item">
+                            <div class="collaborator-name">
+                                <span class="icon">
+                                    <i class="fas fa-user-circle"></i>
+                                </span>
                                 ${member.url ? 
-                                    `<a href="${member.url}" class="collaborator-name" target="_blank" rel="noopener noreferrer">` :
-                                    `<span class="collaborator-name">`}
-                                    <span class="icon">
-                                        <i class="fas fa-user-circle"></i>
-                                    </span>
-                                    <span>${member.name}</span>
-                                ${member.url ? `</a>` : `</span>`}
-                                <div class="department-name">
-                                    <span class="icon">
-                                        <i class="fas fa-building"></i>
-                                    </span>
-                                    <span>${member.department || 'Department not specified'}</span>
-                                </div>
+                                    `<a href="${member.url}" target="_blank" rel="noopener noreferrer">${member.name}</a>` :
+                                    `<span>${member.name}</span>`
+                                }
+                            </div>
+                            <div class="collaborator-department">
+                                <span class="icon">
+                                    <i class="fas fa-building"></i>
+                                </span>
+                                <span>${member.department || 'Department not specified'}</span>
                             </div>
                         </div>
                     `).join('')}

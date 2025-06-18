@@ -69,19 +69,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Add caption
             const caption = document.createElement('div');
             caption.className = 'carousel-caption';
-            const date = new Date(item.created_at).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long'
-            });
             caption.innerHTML = `
                 <h4 class="project-title">${item.caption || ''}</h4>
-                <p class="project-date">${date}</p>
             `;
             
             // Append elements
             imageContainer.appendChild(img);
             slide.appendChild(imageContainer);
-            slide.appendChild(caption);
+            if (item.caption) {
+                slide.appendChild(caption);
+            }
             container.appendChild(slide);
         });
 
