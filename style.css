@@ -1251,51 +1251,57 @@ main {
 
 /* Notice Section Styles */
 .notice-wrapper {
-    position: relative;
-    height: 450px;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
 }
 
 .notice-container {
-    height: 100%;
+    height: 400px;
     overflow-y: auto;
+    position: relative;
     scrollbar-width: thin;
-    scrollbar-color: var(--primary-accent) #f0f0f0;
-    scroll-behavior: smooth;
+    scrollbar-color: var(--primary-accent) var(--bg-hover);
 }
 
-/* Webkit scrollbar styles */
 .notice-container::-webkit-scrollbar {
     width: 8px;
 }
 
 .notice-container::-webkit-scrollbar-track {
-    background: #f0f0f0;
+    background: var(--bg-hover);
     border-radius: 4px;
 }
 
 .notice-container::-webkit-scrollbar-thumb {
     background-color: var(--primary-accent);
     border-radius: 4px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.notice-container::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
 }
 
 .notice-scroll {
-    padding: 15px;
+    padding: 0.5rem;
 }
 
 .notice-item {
     padding: 1rem;
-    border-left: 3px solid var(--primary-accent);
-    background-color: var(--bg-card);
-    box-shadow: var(--shadow-sm);
     margin-bottom: 1rem;
-    transition: transform 0.3s ease;
+    background-color: var(--bg-card);
+    border-radius: 6px;
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
 }
 
 .notice-item:hover {
     transform: translateX(5px);
+    border-color: var(--border-accent);
 }
 
 .notice-content {
@@ -1305,15 +1311,15 @@ main {
 }
 
 .notice-title {
-    font-weight: 500;
-    color: var(--text-primary);
     font-size: var(--body-size);
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
 .notice-date {
     font-size: var(--small-size);
-    color: var(--text-secondary);
-    font-style: italic;
+    color: var(--text-light);
+    opacity: 0.8;
 }
 
 .notice-controls {

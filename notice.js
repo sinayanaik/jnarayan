@@ -2,6 +2,9 @@
 let notices = [];
 let autoScrollInterval;
 let isScrolling = true;
+const SCROLL_SPEED = 1.2;
+let animationFrameId = null;
+let isResetting = false;
 
 async function fetchNotices() {
     try {
@@ -68,25 +71,56 @@ function initializeAutoScroll() {
     const container = document.getElementById('notice-container');
     if (!container) return;
 
-    function startAutoScroll() {
-        if (autoScrollInterval) clearInterval(autoScrollInterval);
-        
-        autoScrollInterval = setInterval(() => {
-            if (!isScrolling) return;
+    let lastScrollTop = 0;
 
-            // Increment scroll position
-            container.scrollTop += 1;
+    function smoothScrollToTop() {
+        isResetting = true;
+        const start = container.scrollTop;
+        const startTime = performance.now();
+        const duration = 500; // 500ms for reset animation
 
-            // If we've reached the bottom, reset to top
-            if (container.scrollTop >= (container.scrollHeight - container.offsetHeight)) {
-                container.scrollTop = 0;
-                // Small pause before continuing
-                isScrolling = false;
-                setTimeout(() => {
-                    isScrolling = true;
-                }, 1000);
+        function animateScroll(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function for smooth deceleration
+            const easeOut = 1 - Math.pow(1 - progress, 2);
+            
+            container.scrollTop = start * (1 - easeOut);
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            } else {
+                isResetting = false;
             }
-        }, 50); // Adjust this value to control scroll speed (lower = faster)
+        }
+
+        requestAnimationFrame(animateScroll);
+    }
+
+    function animate() {
+        if (isScrolling && !isResetting) {
+            // Increment scroll position
+            container.scrollTop += SCROLL_SPEED;
+
+            // If we've reached the bottom
+            if (container.scrollTop >= (container.scrollHeight - container.offsetHeight - 10)) {
+                smoothScrollToTop();
+            }
+
+            // Update lastScrollTop
+            lastScrollTop = container.scrollTop;
+        }
+        
+        // Request next frame
+        animationFrameId = requestAnimationFrame(animate);
+    }
+
+    function startAutoScroll() {
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
+        animate();
     }
 
     // Start auto-scrolling
@@ -94,7 +128,9 @@ function initializeAutoScroll() {
 
     // Pause on hover
     container.addEventListener('mouseenter', () => {
-        isScrolling = false;
+        if (!isResetting) {
+            isScrolling = false;
+        }
     });
 
     container.addEventListener('mouseleave', () => {
@@ -104,16 +140,23 @@ function initializeAutoScroll() {
     // Handle manual scrolling
     let scrollTimeout;
     container.addEventListener('scroll', () => {
-        const wasScrolling = isScrolling;
-        isScrolling = false;
-        clearTimeout(scrollTimeout);
-        
-        scrollTimeout = setTimeout(() => {
-            if (wasScrolling) {
-                isScrolling = true;
-            }
-        }, 1000);
+        if (!isResetting && !isScrolling) {
+            clearTimeout(scrollTimeout);
+            
+            scrollTimeout = setTimeout(() => {
+                if (!container.matches(':hover')) {
+                    isScrolling = true;
+                }
+            }, 800);
+        }
     });
+}
+
+// Cleanup function to prevent memory leaks
+function cleanup() {
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+    }
 }
 
 // Initialize notices when the DOM is loaded
@@ -131,4 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         fetchNotices();
     }, 100);
-}); 
+});
+
+// Cleanup when page is unloaded
+window.addEventListener('unload', cleanup); 
