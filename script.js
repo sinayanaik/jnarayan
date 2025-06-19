@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
     const aboutSection = document.querySelector('#about');
 
-    // Navbar functionality
+    // Navbar burger functionality
     if ($navbarBurger && $navbarMenu) {
         $navbarBurger.addEventListener('click', () => {
             $navbarBurger.classList.toggle('is-active');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle scroll effects
+    // Handle navbar scroll effect
     if ($header) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scroll handling with error checking
+    // Smooth scroll handling
     if ($navbarItems) {
         $navbarItems.forEach(item => {
             if (!item) return;
@@ -50,8 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!href || !href.startsWith('#')) return;
 
                 e.preventDefault();
-                const targetSection = document.querySelector(href);
                 
+                // Remove any existing active states
+                $navbarItems.forEach(navItem => navItem.classList.remove('is-active'));
+                
+                const targetSection = document.querySelector(href);
                 if (targetSection) {
                     const navbarHeight = $header ? $header.offsetHeight : 0;
                     const elementPosition = targetSection.getBoundingClientRect().top;
@@ -72,71 +75,81 @@ document.addEventListener('DOMContentLoaded', function() {
         footerYear.textContent = new Date().getFullYear();
     }
 
-    // Smooth scroll to sections with intersection observer
-    const observer = new IntersectionObserver((entries) => {
+    // Section visibility tracking
+    const observerOptions = {
+        root: null,
+        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1.0],
+        rootMargin: `-${($header ? $header.offsetHeight + 20 : 0)}px 0px -20% 0px`
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        // Get the section most in view
+        let maxVisibility = 0;
+        let mostVisibleSection = null;
+
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                updateActiveNavItem(id, $navbarItems);
+            const rect = entry.target.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            
+            // Calculate how much of the section is visible
+            const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+            const sectionVisibility = visibleHeight / entry.target.offsetHeight;
+            
+            // Consider both intersection ratio and viewport position
+            const visibility = entry.intersectionRatio * sectionVisibility;
+            
+            if (visibility > maxVisibility) {
+                maxVisibility = visibility;
+                mostVisibleSection = entry.target;
             }
         });
-    }, {
-        rootMargin: '-20% 0px -80% 0px'
-    });
+
+        // First remove all active states
+        $navbarItems.forEach(item => item.classList.remove('is-active'));
+
+        // Then set active state only for the most visible section
+        if (mostVisibleSection && maxVisibility > 0.3) {
+            const sectionId = mostVisibleSection.id;
+            const activeNavItem = document.querySelector(`.navbar-item[href="#${sectionId}"]`);
+            if (activeNavItem) {
+                activeNavItem.classList.add('is-active');
+            }
+        }
+    }, observerOptions);
 
     // Observe all sections
     document.querySelectorAll('section[id]').forEach(section => {
-        observer.observe(section);
+        sectionObserver.observe(section);
     });
 
-    // Update active navigation item
-    function updateActiveNavItem(sectionId, navItems) {
-        if (!sectionId || !navItems) return;
-        
-        navItems.forEach(item => {
-            if (!item) return;
-            
-            // Remove active class from all items
-            item.classList.remove('is-active');
-            
-            // Add active class to current section's nav item
-            const href = item.getAttribute('href');
-            if (href === `#${sectionId}`) {
-                item.classList.add('is-active');
-            }
-        });
-    }
-
-    // Set initial active state based on scroll position
-    function setInitialActiveState() {
-        const scrollPosition = window.scrollY;
-        const navbarHeight = $header?.offsetHeight || 0;
-
-        // Find the current section
-        const sections = document.querySelectorAll('section[id]');
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - navbarHeight - 10;
-            const sectionBottom = sectionTop + section.offsetHeight;
-
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                updateActiveNavItem(section.id, $navbarItems);
-            }
-        });
-    }
-
-    // Initialize
-    setInitialActiveState();
-    window.addEventListener('scroll', setInitialActiveState);
+    // Additional scroll event listener to handle edge cases
+    window.addEventListener('scroll', () => {
+        // Force recalculation of section visibility after scroll stops
+        clearTimeout(window.scrollEndTimeout);
+        window.scrollEndTimeout = setTimeout(() => {
+            const entries = [];
+            document.querySelectorAll('section[id]').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                entries.push({
+                    target: section,
+                    isIntersecting: rect.top < window.innerHeight && rect.bottom > 0,
+                    intersectionRatio: Math.min(1, Math.max(0, 
+                        (Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)) / rect.height
+                    )),
+                    boundingClientRect: rect
+                });
+            });
+            sectionObserver.callback(entries);
+        }, 100);
+    }, { passive: true });
 
     // Mouse move effect for research category cards
     const cards = document.querySelectorAll('.category-card');
-    
     cards.forEach(card => {
         card.addEventListener('mousemove', e => {
             const rect = card.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
             const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-            
             card.style.setProperty('--mouse-x', `${x}%`);
             card.style.setProperty('--mouse-y', `${y}%`);
         });
@@ -240,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Expose initialization function for other scripts
 window.initializeNavigation = function() {
-    setInitialActiveState();
+    // Implementation of the function
 };
 
 // Function to format date
