@@ -10,48 +10,6 @@ function groupByYear(publications) {
     }, {});
 }
 
-// Function to get unique categories from publications
-async function fetchCategories() {
-    try {
-        const tables = ['journal_articles', 'conference_articles', 'book_chapters', 'patents'];
-        const categorySets = await Promise.all(tables.map(async table => {
-            const { data, error } = await window.supabaseClient
-                .from(table)
-                .select('category')
-                .not('category', 'is', null);
-            
-            if (error) throw error;
-            return new Set(data.map(item => item.category));
-        }));
-
-        // Combine all unique categories
-        const allCategories = new Set();
-        categorySets.forEach(set => set.forEach(category => allCategories.add(category)));
-        return Array.from(allCategories).sort();
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-        return [];
-    }
-}
-
-// Function to render categories in research areas
-function renderCategories(categories) {
-    const container = document.getElementById('research-categories');
-    if (!container) {
-        console.error('Research categories container not found');
-        return;
-    }
-
-    const categoryItems = categories.map(category => `
-        <a href="category.html?category=${encodeURIComponent(category)}" 
-           class="category-item">
-            ${category}
-        </a>
-    `).join('');
-
-    container.innerHTML = categoryItems;
-}
-
 // Function to create publication element
 function createPublicationElement(publication) {
     const div = document.createElement('div');
@@ -133,10 +91,6 @@ async function fetchPublications(tableName) {
 // Initialize when the DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // Fetch and render categories in research areas
-        const categories = await fetchCategories();
-        renderCategories(categories);
-
         // Fetch all publication types
         const [journalArticles, conferenceArticles, bookChapters, patents] = await Promise.all([
             fetchPublications('journal_articles'),

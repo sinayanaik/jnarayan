@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const $navbarMenu = document.querySelector('.navbar-menu');
     const $navbarItems = document.querySelectorAll('.navbar-item');
     const $header = document.querySelector('.navbar');
+    const navbar = document.querySelector('.navbar');
+    const aboutSection = document.querySelector('#about');
 
     // Navbar functionality
     if ($navbarBurger && $navbarMenu) {
@@ -139,6 +141,101 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.setProperty('--mouse-y', `${y}%`);
         });
     });
+
+    // Handle navbar scroll effect and active section tracking
+    function handleNavbarScroll() {
+        const navbar = document.querySelector('.navbar');
+        const aboutSection = document.querySelector('#about');
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.navbar-item');
+        
+        if (!navbar || !aboutSection) return;
+        
+        // Calculate the midpoint of the about section
+        const aboutStart = aboutSection.offsetTop;
+        const aboutMidpoint = aboutStart + (aboutSection.offsetHeight / 2);
+        
+        function setActiveNavItem() {
+            const scrollPosition = window.scrollY + navbar.offsetHeight;
+
+            // Handle navbar transformation at about section midpoint
+            if (scrollPosition > aboutMidpoint) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Handle active section tracking
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - navbar.offsetHeight - 20;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    currentSection = section.id;
+                    
+                    // Update URL hash without scrolling
+                    const urlHash = window.location.hash.slice(1);
+                    if (urlHash !== currentSection) {
+                        history.replaceState(null, null, `#${currentSection}`);
+                    }
+                }
+            });
+
+            // Update active nav item
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (!href) return;
+                
+                const sectionId = href.includes('#') ? href.split('#')[1] : '';
+                
+                if (sectionId === currentSection) {
+                    item.classList.add('is-active');
+                } else {
+                    item.classList.remove('is-active');
+                }
+            });
+        }
+
+        // Initial check
+        setActiveNavItem();
+        
+        // Add scroll event listener with throttling for performance
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    setActiveNavItem();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Handle smooth scrolling for navbar links
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const href = item.getAttribute('href');
+                if (!href || !href.startsWith('#')) return;
+                
+                e.preventDefault();
+                const targetId = href.split('#')[1];
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const targetPosition = targetSection.offsetTop - navbar.offsetHeight + 2;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+
+    // Initialize all functionality when DOM is loaded
+    handleNavbarScroll();
 });
 
 // Expose initialization function for other scripts
