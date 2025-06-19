@@ -82,39 +82,47 @@ html {
 
 .navbar {
     transition: all 0.3s ease;
-    background: linear-gradient(to right, rgba(144, 30, 62, 0.05), rgba(144, 30, 62, 0.1));
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: linear-gradient(to right, rgba(144, 30, 62, 0.08), rgba(144, 30, 62, 0.12));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: var(--shadow-sm);
     height: 3.25rem;
-    border-bottom: 1px solid rgba(144, 30, 62, 0.1);
+    border-bottom: 1px solid rgba(144, 30, 62, 0.15);
+    padding: 0.5rem 1rem;
 }
 
 .navbar .name {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: var(--text-primary);
     transition: all 0.3s ease;
-    opacity: 0.85;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
 }
 
 .navbar.scrolled {
     height: 4rem;
-    background: linear-gradient(to right, rgba(144, 30, 62, 0.08), rgba(144, 30, 62, 0.15));
+    background: linear-gradient(to right, rgba(144, 30, 62, 0.1), rgba(144, 30, 62, 0.15));
     box-shadow: var(--shadow-md);
+    border-bottom: 1px solid rgba(144, 30, 62, 0.2);
 }
 
 .navbar.scrolled .name {
     font-size: 1.6rem;
-    font-weight: 600;
+    font-weight: 700;
     opacity: 1;
 }
 
 .navbar-item {
-    color: var(--text-primary);
+    color: rgba(0, 0, 0, 0.85);
     transition: all 0.3s ease;
     position: relative;
-    margin: 0 0.2rem;
+    margin: 0 0.3rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    border-radius: 4px;
 }
 
 .navbar-item::after {
@@ -123,27 +131,29 @@ html {
     bottom: 0;
     left: 50%;
     width: 0;
-    height: 2px;
+    height: 2.5px;
     background: var(--primary-accent);
     transition: all 0.3s ease;
     transform: translateX(-50%);
     opacity: 0;
+    border-radius: 2px;
 }
 
 .navbar-item:hover::after,
 .navbar-item.is-active::after {
-    width: 100%;
+    width: 80%;
     opacity: 1;
 }
 
 .navbar-item:hover {
     color: var(--primary-accent) !important;
-    background-color: rgba(144, 30, 62, 0.05) !important;
+    background-color: rgba(144, 30, 62, 0.15) !important;
+    transform: translateY(-1px);
 }
 
 .navbar-item.is-active {
     color: var(--primary-accent) !important;
-    background-color: rgba(144, 30, 62, 0.08) !important;
+    background-color: rgba(144, 30, 62, 0.2) !important;
     font-weight: 600;
 }
 
@@ -206,25 +216,41 @@ html {
 /* Mobile navbar styles */
 @media screen and (max-width: 1023px) {
     .navbar-menu {
-        background: linear-gradient(135deg, #511D43, #901E3E);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(to right, rgba(144, 30, 62, 0.08), rgba(144, 30, 62, 0.12));
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-md);
+        padding: 1rem;
+        border-bottom: 1px solid rgba(144, 30, 62, 0.15);
     }
 
     .navbar-menu.is-active {
         display: block;
-        position: absolute;
-        width: 100%;
-        left: 0;
-        top: 100%;
+        animation: slideDown 0.3s ease;
     }
 
     .navbar-item {
-        padding: 0.75rem 1.5rem;
+        margin: 0.5rem 0;
+        padding: 0.7rem 1rem;
     }
 
-    .navbar-item:hover,
-    .navbar-item.is-active {
-        background-color: rgba(58, 5, 25, 0.3) !important;
+    .navbar-item::after {
+        bottom: -2px;
+    }
+
+    .navbar-item:hover {
+        transform: translateX(5px);
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
 
@@ -348,8 +374,39 @@ main {
 }
 
 .education-item {
-    padding: 1.25rem;
     background: var(--bg-hover);
+    border-radius: 8px;
+}
+
+.education-item.phd-item,
+.education-item.me-item {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+}
+
+.education-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.education-image {
+    flex-shrink: 0;
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phd-gif,
+.me-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
     border-radius: 8px;
 }
 
@@ -368,6 +425,21 @@ main {
     color: var(--text-light);
     font-size: var(--small-size);
     font-style: italic;
+}
+
+@media screen and (max-width: 768px) {
+    .education-item.phd-item,
+    .education-item.me-item {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.25rem;
+    }
+
+    .education-image {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
 }
 
 /* Publications Section Styles */
@@ -482,33 +554,39 @@ main {
 
 .research-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
 }
 
 .research-item {
-    background: var(--bg-hover);
-    border-radius: 12px;
-    padding: 2rem;
-    border: 1px solid var(--border-light);
+    background: var(--bg-card);
+    border-radius: 8px;
+    padding: 1.2rem;
+    box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
-    cursor: pointer;
+    border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100px;
 }
 
 .research-item:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: var(--shadow-md);
-    border-color: var(--primary-accent);
-    background: linear-gradient(135deg, var(--bg-hover), rgba(144, 30, 62, 0.1));
+    border-color: var(--border-accent);
 }
 
 .research-item h4 {
-    font-size: var(--h4-size);
+    font-size: 1.15rem;
     color: var(--text-primary);
+    font-weight: 500;
     margin: 0;
+    line-height: 1.4;
     transition: color 0.3s ease;
-    text-align: center;
 }
 
 .research-item:hover h4 {
@@ -554,11 +632,32 @@ main {
 
 @media (max-width: 768px) {
     .research-grid {
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+    }
+
+    .research-item {
+        padding: 1rem;
+        min-height: 90px;
+    }
+
+    .research-item h4 {
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .research-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .research-item {
-        padding: 1.5rem;
+        padding: 0.9rem;
+        min-height: 80px;
+    }
+
+    .research-item h4 {
+        font-size: 1rem;
     }
 }
 
@@ -1969,13 +2068,41 @@ a:hover {
 /* Mobile navbar styles */
 @media screen and (max-width: 1023px) {
     .navbar-menu {
-        background: linear-gradient(135deg, #511D43, #901E3E);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(to right, rgba(144, 30, 62, 0.08), rgba(144, 30, 62, 0.12));
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-md);
+        padding: 1rem;
+        border-bottom: 1px solid rgba(144, 30, 62, 0.15);
     }
 
-    .navbar-item:hover,
-    .navbar-item.is-active {
-        background-color: rgba(58, 5, 25, 0.3) !important;
+    .navbar-menu.is-active {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    .navbar-item {
+        margin: 0.5rem 0;
+        padding: 0.7rem 1rem;
+    }
+
+    .navbar-item::after {
+        bottom: -2px;
+    }
+
+    .navbar-item:hover {
+        transform: translateX(5px);
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
 
@@ -2071,22 +2198,61 @@ a:hover {
 }
 
 /* Teaching Section */
+.teaching-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 .teaching-item {
-    font-size: var(--body-size);
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-hover);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.teaching-item h4 {
-    font-size: var(--h4-size);
-    margin-bottom: 1rem;
+.teaching-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
-.teaching-item p,
-.teaching-item li {
+.bullet {
+    color: var(--primary-accent);
+    font-size: 1rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.course-name {
+    color: var(--text-primary);
     font-size: var(--body-size);
-    line-height: 1.6;
-    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+@media screen and (max-width: 768px) {
+    .teaching-item {
+        padding: 0.625rem 0.875rem;
+        gap: 0.625rem;
+    }
+
+    .course-name {
+        font-size: calc(var(--body-size) * 0.95);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .teaching-item {
+        padding: 0.5rem 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .course-name {
+        font-size: calc(var(--body-size) * 0.9);
+    }
 }
 
 /* Research Section */
