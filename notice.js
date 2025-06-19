@@ -1,5 +1,7 @@
 // Notice functionality
 let notices = [];
+let autoScrollInterval;
+let isScrolling = true;
 
 async function fetchNotices() {
     try {
@@ -8,12 +10,12 @@ async function fetchNotices() {
         }
 
         const { data, error } = await window.supabaseClient
-        .from('noticeboard')
+            .from('noticeboard')
             .select('title, date')
-        .order('date', { ascending: false });
+            .order('date', { ascending: false });
 
-    if (error) {
-        console.error('Error fetching notices:', error);
+        if (error) {
+            console.error('Error fetching notices:', error);
             const container = document.getElementById('notice-container');
             if (container) {
                 container.innerHTML = '<p class="has-text-centered">Error loading notices</p>';
@@ -26,11 +28,12 @@ async function fetchNotices() {
             if (container) {
                 container.innerHTML = '<p class="has-text-centered">No notices available</p>';
             }
-        return;
-    }
+            return;
+        }
 
-    notices = data;
-    renderNotices();
+        notices = data;
+        renderNotices();
+        initializeAutoScroll();
     } catch (error) {
         console.error('Error in fetchNotices:', error);
         const container = document.getElementById('notice-container');
@@ -42,12 +45,9 @@ async function fetchNotices() {
 
 function renderNotices() {
     const container = document.getElementById('notice-container');
-    if (!container) {
-        console.error('Notice container not found');
-        return;
-    }
+    if (!container || !notices.length) return;
 
-    // Create the scrolling content
+    // Create the notices list
     const noticesList = notices.map(notice => `
         <div class="notice-item">
             <div class="notice-content">
@@ -61,73 +61,59 @@ function renderNotices() {
         </div>
     `).join('');
 
-    // Create a wrapper for the scrolling animation
-    container.innerHTML = `
-        <div class="scroll-wrapper">
-            <div class="scroll-content">
-                ${noticesList}
-            </div>
-            <div class="scroll-content" aria-hidden="true">
-                ${noticesList}
-            </div>
-        </div>
-    `;
+    container.innerHTML = `<div class="notice-scroll">${noticesList}</div>`;
+}
 
-    // Add necessary styles for the scrolling animation
-    const style = document.createElement('style');
-    style.textContent = `
-        #notice-container {
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .scroll-wrapper {
-            position: relative;
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .scroll-content {
-            animation: scroll 15s linear infinite;
-            padding: 0.5rem;
-        }
-        
-        .scroll-wrapper:hover .scroll-content {
-            animation-play-state: paused;
-        }
-        
-        @keyframes scroll {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(-50%);
-            }
-        }
+function initializeAutoScroll() {
+    const container = document.getElementById('notice-container');
+    if (!container) return;
 
-        .notice-item {
-            padding: 10px 15px;
-            border-left: 4px solid #3273dc;
-            margin: 8px 0;
-            background: white;
-            transition: background-color 0.3s ease;
-            }
+    function startAutoScroll() {
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
         
-        .notice-item:hover {
-            background: #f5f5f5;
-        }
+        autoScrollInterval = setInterval(() => {
+            if (!isScrolling) return;
 
-        .notice-title {
-            font-weight: 500;
-            margin-bottom: 5px;
+            // Increment scroll position
+            container.scrollTop += 1;
+
+            // If we've reached the bottom, reset to top
+            if (container.scrollTop >= (container.scrollHeight - container.offsetHeight)) {
+                container.scrollTop = 0;
+                // Small pause before continuing
+                isScrolling = false;
+                setTimeout(() => {
+                    isScrolling = true;
+                }, 1000);
+            }
+        }, 50); // Adjust this value to control scroll speed (lower = faster)
     }
 
-        .notice-date {
-            font-size: 0.9em;
-            color: #666;
-        }
-    `;
-    document.head.appendChild(style);
+    // Start auto-scrolling
+    startAutoScroll();
+
+    // Pause on hover
+    container.addEventListener('mouseenter', () => {
+        isScrolling = false;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isScrolling = true;
+    });
+
+    // Handle manual scrolling
+    let scrollTimeout;
+    container.addEventListener('scroll', () => {
+        const wasScrolling = isScrolling;
+        isScrolling = false;
+        clearTimeout(scrollTimeout);
+        
+        scrollTimeout = setTimeout(() => {
+            if (wasScrolling) {
+                isScrolling = true;
+            }
+        }, 1000);
+    });
 }
 
 // Initialize notices when the DOM is loaded
@@ -143,6 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-    fetchNotices();
+        fetchNotices();
     }, 100);
 }); 
