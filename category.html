@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research Category - Dr. Jyotindra Narayan</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Load Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Initialize Supabase client immediately
         const SUPABASE_URL = 'https://ktiiyeuvsvbqnrhqbwmr.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aWl5ZXV2c3ZicW5yaHFid21yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1NjI1OTIsImV4cCI6MjA2NTEzODU5Mn0.yPZY4oo70R4UXl4grSLyLRfNLJzFg1EYMeoKjpZy6tA';
         window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     </script>
-    <script src="category.js"></script>
 </head>
 <body>
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -46,13 +45,33 @@
         </div>
     </nav>
 
-    <main>
+    <main class="category-page">
         <div class="container">
-            <div class="category-header">
-                <h2 id="category-title"></h2>
+            <h1 id="category-title" class="category-title"></h1>
+            
+            <div id="loading" class="loading">Loading publications...</div>
+            
+            <div id="publications-container" class="publications-container" style="display: none;">
+                <section id="book-chapters" class="publication-section">
+                    <h2>Book Chapters</h2>
+                    <div id="book-chapters-list" class="publication-list"></div>
+                </section>
+                
+                <section id="journal-articles" class="publication-section">
+                    <h2>Journal Articles</h2>
+                    <div id="journal-articles-list" class="publication-list"></div>
+                </section>
+                
+                <section id="conference-articles" class="publication-section">
+                    <h2>Conference Articles</h2>
+                    <div id="conference-articles-list" class="publication-list"></div>
+                </section>
+                
+                <section id="patents" class="publication-section">
+                    <h2>Patents</h2>
+                    <div id="patents-list" class="publication-list"></div>
+                </section>
             </div>
-
-            <div id="category-publications"></div>
         </div>
     </main>
 
@@ -62,8 +81,6 @@
         </div>
     </footer>
 
-    <!-- Load Scripts -->
-    <script src="script.js"></script>
     <script src="category.js"></script>
 </body>
 </html> 
