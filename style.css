@@ -57,9 +57,9 @@ body {
 /* Container width - Dynamic and responsive */
 .container {
     max-width: 100% !important;
-    padding: 0 0.5rem;
+    padding: 0 clamp(0.3rem, 1vw, 0.8rem);
     margin: 0 auto;
-    width: 99%;
+    width: clamp(95%, 98vw, 99%);
 }
 
 /* Root Styles */
@@ -88,6 +88,18 @@ html {
     min-height: 3.25rem;
     width: 100% !important;
     padding: 0 !important;
+    overflow: visible;
+}
+
+.navbar-menu {
+    overflow: visible;
+    flex-wrap: nowrap;
+}
+
+.navbar-start,
+.navbar-end {
+    overflow: visible;
+    flex-wrap: nowrap;
 }
 
 .navbar.is-fixed-top {
@@ -99,9 +111,12 @@ html {
 /* Navbar content wrapper to match main container */
 .navbar .container {
     max-width: 100%;
-    width: 99%;
+    width: clamp(95%, 98vw, 99%);
     margin: 0 auto;
-    padding: 0 0.5rem;
+    padding: 0 clamp(0.3rem, 1vw, 0.8rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 @media screen and (max-width: 1023px) {
@@ -116,11 +131,35 @@ html {
     /* container handles width */
 }
 
-/* Desktop navbar container */
+/* Desktop navbar container - Responsive */
 @media screen and (min-width: 1024px) {
     .navbar-brand,
     .navbar-menu {
-        padding: 0 1rem;
+        padding: 0 clamp(0.2rem, 1vw, 1rem);
+    }
+    
+    .navbar-menu {
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        overflow: visible;
+        min-width: 0;
+        flex-shrink: 1;
+    }
+    
+    .navbar-start,
+    .navbar-end {
+        flex-wrap: nowrap;
+        overflow: visible;
+        min-width: 0;
+        flex-shrink: 1;
+    }
+    
+    /* Ensure navbar items can shrink if needed */
+    .navbar-item {
+        flex-shrink: 1;
+        min-width: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 }
 
@@ -131,32 +170,34 @@ html {
     border-bottom: 1px solid var(--primary-light);
 }
 
-/* Navbar brand styling */
+/* Navbar brand styling - Responsive */
 .navbar-brand .navbar-item .name {
-    font-size: 1.4rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     font-weight: 600;
     color: #ffffff !important;
     transition: all 0.3s ease;
     opacity: 0.95;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
 }
 
 .navbar.scrolled .navbar-brand .navbar-item .name {
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 2.8vw, 1.6rem);
     font-weight: 700;
     opacity: 1;
 }
 
-/* Navbar items styling */
+/* Navbar items styling - Responsive */
 .navbar-item {
     color: rgba(255, 255, 255, 0.85) !important;
     transition: all 0.3s ease;
     position: relative;
     font-weight: 500;
-    font-size: 1.2rem;
-    letter-spacing: 0.3px;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    letter-spacing: 0.2px;
     border-radius: 4px;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem clamp(0.5rem, 1.5vw, 1rem);
+    white-space: nowrap;
 }
 
 .navbar-item:hover {
@@ -266,11 +307,11 @@ html {
 /* Main Content */
 main {
     padding-top: 80px;
-    width: 99%;
+    width: clamp(95%, 98vw, 99%);
     max-width: 100%;
     margin: 0 auto;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: clamp(0.3rem, 1vw, 0.8rem);
+    padding-right: clamp(0.3rem, 1vw, 0.8rem);
 }
 
 /* Section Styles - Optimized spacing */
@@ -2538,20 +2579,29 @@ a:hover {
     }
 }
 
-/* Mobile navbar styles */
+/* Tablet and Mobile navbar styles */
 @media screen and (max-width: 1023px) {
+    .navbar .container {
+        width: 100%;
+        padding: 0 clamp(0.5rem, 2vw, 1rem);
+    }
+    
     .navbar-brand,
     .navbar-menu {
         width: 100%;
-        padding: 0 0.5rem;
+        padding: 0;
         margin: 0;
         max-width: none;
+    }
+    
+    .navbar-brand .navbar-item .name {
+        font-size: clamp(1.1rem, 4vw, 1.4rem);
     }
     
     .navbar-menu {
         background: var(--primary-accent) !important;
         box-shadow: var(--shadow-md);
-        padding: 0.8rem 0.5rem;
+        padding: 0.8rem clamp(0.5rem, 2vw, 1rem);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -2561,10 +2611,11 @@ a:hover {
     }
 
     .navbar-item {
-        padding: 0.8rem 1.2rem !important;
+        padding: 0.8rem clamp(0.8rem, 3vw, 1.2rem) !important;
         margin: 0.2rem 0;
         border-radius: 6px !important;
-        font-size: 1.1rem !important;
+        font-size: clamp(1rem, 3.5vw, 1.2rem) !important;
+        white-space: nowrap;
     }
 
     .navbar-item:hover {
@@ -2593,8 +2644,49 @@ a:hover {
     }
 }
 
+/* Small desktop screens - Compact navbar */
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
+    .navbar-item {
+        font-size: clamp(0.8rem, 1.6vw, 1rem);
+        padding: 0.4rem clamp(0.3rem, 1vw, 0.6rem);
+        letter-spacing: 0.1px;
+    }
+    
+    .navbar-brand .navbar-item .name {
+        font-size: clamp(0.95rem, 2vw, 1.2rem);
+    }
+    
+    .navbar .container {
+        padding: 0 clamp(0.2rem, 0.8vw, 0.5rem);
+    }
+}
+
+/* Intermediate screen sizes - Better navbar scaling */
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .navbar-item {
+        font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+        padding: 0.4rem clamp(0.4rem, 1.2vw, 0.8rem);
+    }
+    
+    .navbar-brand .navbar-item .name {
+        font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+    }
+}
+
+/* Medium desktop screens */
+@media screen and (min-width: 1400px) and (max-width: 1600px) {
+    .navbar-item {
+        font-size: clamp(1rem, 1.9vw, 1.2rem);
+        padding: 0.5rem clamp(0.6rem, 1.3vw, 1rem);
+    }
+    
+    .navbar-brand .navbar-item .name {
+        font-size: clamp(1.2rem, 2.4vw, 1.4rem);
+    }
+}
+
 /* Large screen optimization */
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
     .container {
         max-width: 98% !important;
         padding: 0 1rem;
@@ -2651,22 +2743,22 @@ a:hover {
     
     .container,
     main {
-        width: 99.5%;
-        padding-left: 0.4rem;
-        padding-right: 0.4rem;
+        width: clamp(96%, 99vw, 99.5%);
+        padding-left: clamp(0.3rem, 1.5vw, 0.5rem);
+        padding-right: clamp(0.3rem, 1.5vw, 0.5rem);
     }
     
     .navbar .container {
-        width: 99.5%;
-        padding: 0 0.4rem;
+        width: clamp(96%, 99vw, 99.5%);
+        padding: 0 clamp(0.3rem, 1.5vw, 0.5rem);
     }
     
     .navbar-item {
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 3.5vw, 1.2rem);
     }
     
     .section {
-        padding: 1.5rem 1rem;
+        padding: 1.5rem clamp(0.8rem, 2vw, 1.2rem);
         margin-bottom: 1.5rem;
     }
 }
@@ -2684,23 +2776,23 @@ a:hover {
     
     .container,
     main {
-        width: 99.8%;
-        padding-left: 0.3rem;
-        padding-right: 0.3rem;
+        width: clamp(98%, 99.5vw, 99.8%);
+        padding-left: clamp(0.2rem, 1vw, 0.4rem);
+        padding-right: clamp(0.2rem, 1vw, 0.4rem);
     }
     
     .navbar .container {
-        width: 99.8%;
-        padding: 0 0.3rem;
+        width: clamp(98%, 99.5vw, 99.8%);
+        padding: 0 clamp(0.2rem, 1vw, 0.4rem);
     }
     
     .navbar-item {
-        font-size: 1rem;
-        padding: 0.4rem 0.8rem;
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        padding: 0.4rem clamp(0.6rem, 2vw, 0.9rem);
     }
     
     .section {
-        padding: 1.2rem 0.8rem;
+        padding: 1.2rem clamp(0.6rem, 2vw, 1rem);
         margin-bottom: 1.2rem;
     }
 }
