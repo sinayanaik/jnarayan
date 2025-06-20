@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add section-container class to all major sections
-    document.querySelectorAll('.profile-container, .gallery-section, .noticeboard-section, .research-areas, .education-section, .experience-section, .teaching-section, .students-section, .publications-section, .talks-section, .awards-section').forEach(section => {
+    document.querySelectorAll('.gallery-section, .noticeboard-section, .research-areas, .education-section, .experience-section, .teaching-section, .students-section, .publications-section, .talks-section, .awards-section').forEach(section => {
         section.classList.add('section-container');
     });
 }); 
