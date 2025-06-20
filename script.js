@@ -10,10 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Navbar burger functionality
     if ($navbarBurger && $navbarMenu) {
-        $navbarBurger.addEventListener('click', () => {
+        console.log('Navbar burger and menu found, adding click listener');
+        $navbarBurger.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Burger clicked!');
             $navbarBurger.classList.toggle('is-active');
             $navbarMenu.classList.toggle('is-active');
+            console.log('Menu classes after toggle:', $navbarMenu.classList.toString());
+            console.log('Menu computed display:', window.getComputedStyle($navbarMenu).display);
         });
+    } else {
+        console.log('Navbar elements not found:', { burger: $navbarBurger, menu: $navbarMenu });
     }
 
     // Close mobile menu when clicking a link
