@@ -80,58 +80,92 @@ html {
     height: 60px;
 }
 
+/* Bulma Navbar Customization */
 .navbar {
-    transition: all 0.3s ease;
-    background: var(--primary-accent);
+    background: var(--primary-accent) !important;
     box-shadow: var(--shadow-sm);
-    height: 3.25rem;
     border-bottom: 1px solid var(--primary-light);
-    padding: 0.5rem 1rem;
+    min-height: 3.25rem;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.navbar.is-fixed-top {
+    width: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+}
+
+/* Navbar content wrapper to match main container */
+.navbar .container {
+    max-width: 1800px;
+    width: 98%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media screen and (max-width: 1023px) {
+    /* container handles width, no extra for brand/menu */
+}
+
+@media screen and (max-width: 768px) {
+    /* container handles width */
+}
+
+@media screen and (max-width: 480px) {
+    /* container handles width */
+}
+
+/* Desktop navbar container */
+@media screen and (min-width: 1024px) {
+    .navbar-brand,
+    .navbar-menu {
+        padding: 0 1rem;
+    }
 }
 
 .navbar.scrolled {
-    height: 4rem;
-    background: var(--primary-accent);
+    min-height: 4rem;
+    background: var(--primary-accent) !important;
     box-shadow: var(--shadow-md);
     border-bottom: 1px solid var(--primary-light);
 }
 
-.navbar .name {
+/* Navbar brand styling */
+.navbar-brand .navbar-item .name {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #ffffff;
+    color: #ffffff !important;
     transition: all 0.3s ease;
     opacity: 0.95;
     letter-spacing: 0.5px;
 }
 
-.navbar.scrolled .name {
+.navbar.scrolled .navbar-brand .navbar-item .name {
     font-size: 1.6rem;
     font-weight: 700;
     opacity: 1;
 }
 
+/* Navbar items styling */
 .navbar-item {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.85) !important;
     transition: all 0.3s ease;
     position: relative;
-    margin: 0 0.3rem;
-    padding: 0.5rem 1rem;
     font-weight: 500;
     font-size: 1rem;
     letter-spacing: 0.3px;
     border-radius: 4px;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .navbar-item:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .navbar-item.is-active {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
     font-weight: 600;
     position: relative;
 }
@@ -150,66 +184,41 @@ html {
 /* Remove focus styles */
 .navbar-item:focus {
     outline: none;
+    background-color: transparent !important;
+    color: inherit !important;
 }
 
 .navbar-item::-moz-focus-inner {
     border: 0;
 }
 
-/* Hamburger Menu */
-.hamburger {
-    display: none;
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 1002;
+/* Bulma Navbar Burger Styling */
+.navbar-burger {
+    color: white !important;
+    height: 3.25rem;
+    width: 3.25rem;
 }
 
-.hamburger-box {
-    width: 24px;
-    height: 18px;
-    position: relative;
-    display: inline-block;
+.navbar-burger span {
+    background-color: white !important;
+    height: 2px !important;
+    width: 18px !important;
 }
 
-.hamburger-inner,
-.hamburger-inner::before,
-.hamburger-inner::after {
-    width: 24px;
-    height: 2px;
-    background-color: #ffffff;
-    position: absolute;
-    transition: transform 0.15s ease;
+.navbar-burger:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-.hamburger-inner {
-    top: 50%;
-    margin-top: -1px;
+.navbar-burger.is-active span:nth-child(1) {
+    transform: translateY(5px) rotate(45deg) !important;
 }
 
-.hamburger-inner::before {
-    content: '';
-    top: -7px;
+.navbar-burger.is-active span:nth-child(2) {
+    opacity: 0 !important;
 }
 
-.hamburger-inner::after {
-    content: '';
-    bottom: -7px;
-}
-
-/* Hamburger Animation */
-.hamburger.active .hamburger-inner {
-    transform: rotate(45deg);
-}
-
-.hamburger.active .hamburger-inner::before {
-    transform: translate3d(0, 8px, 0) rotate(0);
-    opacity: 0;
-}
-
-.hamburger.active .hamburger-inner::after {
-    transform: translate3d(0, -8px, 0) rotate(-90deg);
+.navbar-burger.is-active span:nth-child(3) {
+    transform: translateY(-5px) rotate(-45deg) !important;
 }
 
 /* Mobile navbar styles */
@@ -2101,31 +2110,44 @@ a:hover {
 
 /* Mobile navbar styles */
 @media screen and (max-width: 1023px) {
+    .navbar-brand,
     .navbar-menu {
-        background: linear-gradient(to right, rgba(144, 30, 62, 0.08), rgba(144, 30, 62, 0.12));
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        width: 100%;
+        padding: 0 1rem;
+        margin: 0;
+        max-width: none;
+    }
+    
+    .navbar-menu {
+        background: var(--primary-accent) !important;
         box-shadow: var(--shadow-md);
         padding: 1rem;
-        border-bottom: 1px solid rgba(144, 30, 62, 0.15);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .navbar-menu.is-active {
-        display: block;
+        display: block !important;
         animation: slideDown 0.3s ease;
     }
 
     .navbar-item {
-        margin: 0.5rem 0;
-        padding: 0.7rem 1rem;
-    }
-
-    .navbar-item::after {
-        bottom: -2px;
+        padding: 0.75rem 1.5rem !important;
+        margin: 0;
+        border-radius: 0 !important;
     }
 
     .navbar-item:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
         transform: translateX(5px);
+    }
+
+    .navbar-item.is-active::after {
+        bottom: 0.25rem;
+        width: 4px;
+        height: 60%;
+        left: 0;
+        transform: translateY(-50%);
+        top: 50%;
     }
 
     @keyframes slideDown {
@@ -2175,6 +2197,11 @@ a:hover {
         padding-right: 0.75rem;
     }
     
+    .navbar-brand,
+    .navbar-menu {
+        padding: 0 0.75rem;
+    }
+    
     .section {
         padding: 2rem;
     }
@@ -2189,6 +2216,11 @@ a:hover {
         --h5-size: 1.2rem;
         --body-size: 1.1rem;
         --small-size: 0.95rem;
+    }
+    
+    .navbar-brand,
+    .navbar-menu {
+        padding: 0 0.5rem;
     }
     
     .section {
@@ -2377,4 +2409,10 @@ a:hover {
     font-size: var(--body-size);
     line-height: 1.6;
     margin-bottom: 1.5rem;
+}
+
+/* Prevent browser visited-state styling from altering navbar link colors */
+.navbar-item:visited {
+    color: rgba(255, 255, 255, 0.85) !important;
+    background-color: transparent !important;
 } 
