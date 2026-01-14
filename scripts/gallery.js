@@ -69,18 +69,22 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Add caption
             const caption = document.createElement('div');
             caption.className = 'carousel-caption';
-            caption.textContent = item.caption || '';
+            caption.innerHTML = `
+                <h4 class="project-title">${item.caption || ''}</h4>
+            `;
             
             // Append elements
             imageContainer.appendChild(img);
             slide.appendChild(imageContainer);
-            slide.appendChild(caption);
+            if (item.caption) {
+                slide.appendChild(caption);
+            }
             container.appendChild(slide);
         });
 
         // Set up navigation
-        const prevButton = document.querySelector('.carousel-nav.prev');
-        const nextButton = document.querySelector('.carousel-nav.next');
+        const prevButton = document.querySelector('.gallery-section .carousel-nav.prev');
+        const nextButton = document.querySelector('.gallery-section .carousel-nav.next');
 
         let currentSlide = 0;
         const totalSlides = galleryData.length;
@@ -112,15 +116,43 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (prevButton) prevButton.addEventListener('click', prevSlide);
         if (nextButton) nextButton.addEventListener('click', nextSlide);
 
-        // Optional: Auto-advance slides (changed from 5000ms to 3000ms)
-        let autoAdvance = setInterval(nextSlide, 3000);
+        // Auto-advance slides
+        let autoAdvance = setInterval(nextSlide, 5000);
 
         // Pause auto-advance on hover
         container.parentElement.addEventListener('mouseenter', () => clearInterval(autoAdvance));
         container.parentElement.addEventListener('mouseleave', () => {
             clearInterval(autoAdvance);
-            autoAdvance = setInterval(nextSlide, 3000);
+            autoAdvance = setInterval(nextSlide, 5000);
         });
+
+        // Touch support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        container.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        container.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchEndX - touchStartX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe right - go to previous
+                    prevSlide();
+                } else {
+                    // Swipe left - go to next
+                    nextSlide();
+                }
+            }
+        }
 
         // Initial position
         updateSlidePosition();

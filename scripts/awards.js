@@ -15,17 +15,29 @@ function renderAwards(awards, type) {
     }
     
     let html = '';
-    awards.forEach(award => {
-        html += `
-            <div class="award-item">
-                <span class="bullet">•</span>
-                <div class="award-content">
-                    <span>${award.title}</span>
-                    <span class="award-year">, ${award.year}</span>
+    if (type === 'Reviewer') {
+        container.classList.add('awards-grid');
+        awards.forEach(award => {
+            html += `
+                <div class="award-chip">
+                    <span class="bullet">•</span>
+                    <span class="award-title">${award.title}</span>
                 </div>
-            </div>
-        `;
-    });
+            `;
+        });
+    } else {
+        container.classList.remove('awards-grid');
+        awards.forEach(award => {
+            html += `
+                <div class="award-item">
+                    <span class="bullet">•</span>
+                    <div class="award-content">
+                        <span class="award-title">${award.title}</span>
+                    </div>
+                </div>
+            `;
+        });
+    }
     
     container.innerHTML = html;
 }
@@ -48,7 +60,7 @@ async function fetchAwards(type) {
 
 // Initialize all award sections
 async function initializeAwards() {
-    const types = ['Awards', 'Editorial', 'Reviewer', 'Technical', 'Advisory'];
+    const types = ['Honours', 'Editorial', 'Reviewer', 'Technical', 'Advisory'];
     
     const promises = types.map(type => fetchAwards(type));
     await Promise.all(promises);
