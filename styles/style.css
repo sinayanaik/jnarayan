@@ -826,6 +826,118 @@ main {
     font-weight: 500;
 }
 
+/* Publications Stats Grid */
+.publications-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-accent) 100%);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.stat-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.publications-cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-view-publications {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: var(--primary-accent);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-view-publications:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: #ffffff;
+}
+
+.btn-view-publications i {
+    transition: transform 0.3s ease;
+}
+
+.btn-view-publications:hover i {
+    transform: translateX(5px);
+}
+
+@media screen and (max-width: 1024px) {
+    .publications-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .publications-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2.2rem;
+    }
+    
+    .stat-card i {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .publications-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Section Headers (Journal Articles, etc.) */
 .journal-articles h4,
 .conference-articles h4,
